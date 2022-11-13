@@ -1,12 +1,13 @@
 package controllers
 
-import models.Note
 import utils.Utilities.formatListString
 import java.util.ArrayList
+import models.Playlist
 
-class NoteAPI() {
 
-    private var notes = ArrayList<Note>()
+class PlaylistAPI() {
+
+    private var playlists = ArrayList<Playlist>()
 
     // ----------------------------------------------
     //  For Managing the id internally in the program
@@ -15,119 +16,119 @@ class NoteAPI() {
     private fun getId() = lastId++
 
     // ----------------------------------------------
-    //  CRUD METHODS FOR NOTE ArrayList
+    //  CRUD METHODS FOR Playlist ArrayList
     // ----------------------------------------------
-    fun add(note: Note): Boolean {
-        note.noteId = getId()
-        return notes.add(note)
+    fun add(playlist: Playlist): Boolean {
+        playlist.playlistId = getId()
+        return playlists.add(playlist)
     }
 
-    fun delete(id: Int) = notes.removeIf { note -> note.noteId == id }
+    fun delete(id: Int) = playlists.removeIf { playlist -> playlist.playlistId == id }
 
-    fun update(id: Int, note: Note?): Boolean {
-        // find the note object by the index number
-        val foundNote = findNote(id)
+    fun update(id: Int, playlist: Playlist?): Boolean {
+        // find the playlist object by the index number
+        val foundPlaylist = findPlaylist(id)
 
-        // if the note exists, use the note details passed as parameters to update the found note in the ArrayList.
-        if ((foundNote != null) && (note != null)) {
-            foundNote.noteTitle = note.noteTitle
-            foundNote.notePriority = note.notePriority
-            foundNote.noteCategory = note.noteCategory
+        // if the playlist exists, use the playlist details passed as parameters to update the found playlist in the ArrayList.
+        if ((foundPlaylist != null) && (playlist != null)) {
+            foundPlaylist.playlistTitle = playlist.playlistTitle
+            foundPlaylist.playlistPriority = playlist.playlistPriority
+            foundPlaylist.playlistCategory = playlist.playlistCategory
             return true
         }
 
-        // if the note was not found, return false, indicating that the update was not successful
+        // if the playlist was not found, return false, indicating that the update was not successful
         return false
     }
 
-    fun archiveNote(id: Int): Boolean {
-        val foundNote = findNote(id)
-        if (( foundNote != null) && (!foundNote.isNoteArchived)
-            && ( foundNote.checkNoteCompletionStatus())) {
-              foundNote.isNoteArchived = true
+    fun archivePlaylist(id: Int): Boolean {
+        val foundPlaylist = findPlaylist(id)
+        if (( foundPlaylist != null) && (!foundPlaylist.isPlaylistArchived)
+            && ( foundPlaylist.checkPlaylistCompletionStatus())) {
+              foundPlaylist.isPlaylistArchived = true
               return true
         }
         return false
     }
 
     // ----------------------------------------------
-    //  LISTING METHODS FOR NOTE ArrayList
+    //  LISTING METHODS FOR playlist ArrayList
     // ----------------------------------------------
-    fun listAllNotes() =
-        if (notes.isEmpty()) "No notes stored"
-        else formatListString(notes)
+    fun listAllPlaylists() =
+        if (playlists.isEmpty()) "No playlists stored"
+        else formatListString(playlists)
 
-    fun listActiveNotes() =
-        if (numberOfActiveNotes() == 0) "No active notes stored"
-        else formatListString(notes.filter { note -> !note.isNoteArchived })
+    fun listActivePlaylists() =
+        if (numberOfActivePlaylists() == 0) "No active playlists stored"
+        else formatListString(playlists.filter { playlist -> !playlist.isPlaylistArchived })
 
-    fun listArchivedNotes() =
-        if (numberOfArchivedNotes() == 0) "No archived notes stored"
-        else formatListString(notes.filter { note -> note.isNoteArchived })
+    fun listArchivedPlaylists() =
+        if (numberOfArchivedPlaylists() == 0) "No archived playlists stored"
+        else formatListString(playlists.filter { playlist -> playlist.isPlaylistArchived })
 
     // ----------------------------------------------
-    //  COUNTING METHODS FOR NOTE ArrayList
+    //  COUNTING METHODS FOR Playlist ArrayList
     // ----------------------------------------------
-    fun numberOfNotes() = notes.size
-    fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
-    fun numberOfActiveNotes(): Int = notes.count { note: Note -> !note.isNoteArchived }
+    fun numberOfPlaylists() = playlists.size
+    fun numberOfArchivedPlaylists(): Int = playlists.count { playlist: Playlist -> playlist.isPlaylistArchived }
+    fun numberOfActivePlaylists(): Int = playlists.count { playlist: Playlist -> !playlist.isPlaylistArchived }
 
     // ----------------------------------------------
     //  SEARCHING METHODS
     // ---------------------------------------------
-    fun findNote(noteId : Int) =  notes.find{ note -> note.noteId == noteId }
+    fun findPlaylist(playlistId : Int) =  playlists.find{ playlist -> playlist.playlistId == playlistId }
 
-    fun searchNotesByTitle(searchString: String) =
+    fun searchPlaylistsByTitle(searchString: String) =
        formatListString(
-            notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) }
+            playlists.filter { playlist -> playlist.playlistTitle.contains(searchString, ignoreCase = true) }
         )
 
-    fun searchItemByContents(searchString: String): String {
-        return if (numberOfNotes() == 0) "No notes stored"
+    fun searchSongByContents(searchString: String): String {
+        return if (numberOfPlaylists() == 0) "No playlists stored"
         else {
-            var listOfNotes = ""
-            for (note in notes) {
-                for (item in note.items) {
-                    if (item.itemContents.contains(searchString, ignoreCase = true)) {
-                        listOfNotes += "${note.noteId}: ${note.noteTitle} \n\t${item}\n"
+            var listOfPlaylists = ""
+            for (playlist in playlists) {
+                for (song in playlist.songs) {
+                    if (song.songContents.contains(searchString, ignoreCase = true)) {
+                        listOfPlaylists += "${playlist.playlistId}: ${playlist.playlistTitle} \n\t${song}\n"
                     }
                 }
             }
-            if (listOfNotes == "") "No items found for: $searchString"
-            else listOfNotes
+            if (listOfPlaylists == "") "No songs found for: $searchString"
+            else listOfPlaylists
         }
     }
 
     // ----------------------------------------------
-    //  LISTING METHODS FOR ITEMS
+    //  LISTING METHODS FOR songS
     // ----------------------------------------------
-    fun listTodoItems(): String =
-         if (numberOfNotes() == 0) "No notes stored"
+    fun listTodoSongs(): String =
+         if (numberOfPlaylists() == 0) "No playlists stored"
          else {
-             var listOfTodoItems = ""
-             for (note in notes) {
-                 for (item in note.items) {
-                     if (!item.isItemComplete) {
-                         listOfTodoItems += note.noteTitle + ": " + item.itemContents + "\n"
+             var listOfTodoSongs = ""
+             for (playlist in playlists) {
+                 for (song in playlist.songs) {
+                     if (!song.isSongComplete) {
+                         listOfTodoSongs += playlist.playlistTitle + ": " + song.songContents + "\n"
                      }
                  }
              }
-             listOfTodoItems
+             listOfTodoSongs
          }
 
     // ----------------------------------------------
-    //  COUNTING METHODS FOR ITEMS
+    //  COUNTING METHODS FOR SongS
     // ----------------------------------------------
-    fun numberOfToDoItems(): Int {
-        var numberOfToDoItems = 0
-        for (note in notes) {
-            for (item in note.items) {
-                if (!item.isItemComplete) {
-                    numberOfToDoItems++
+    fun numberOfToDoSongs(): Int {
+        var numberOfToDoSongs = 0
+        for (playlist in playlists) {
+            for (song in playlist.songs) {
+                if (!song.isSongComplete) {
+                    numberOfToDoSongs++
                 }
             }
         }
-        return numberOfToDoItems
+        return numberOfToDoSongs
     }
 
 }
