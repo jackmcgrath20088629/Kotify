@@ -2,39 +2,39 @@ package models
 
 import utils.Utilities
 
-data class Note(var noteId: Int = 0,
-                var noteTitle: String,
-                var notePriority: Int,
-                var noteCategory: String,
-                var isNoteArchived: Boolean = false,
-                var items : MutableSet<Item> = mutableSetOf())
+data class Playlist(var playlistId: Int = 0,
+                    var playlistTitle: String,
+                    var playlistPriority: Int,
+                    var playlistCategory: String,
+                    var isPlaylistArchived: Boolean = false,
+                    var songs : MutableSet<Song> = mutableSetOf())
 {
-    private var lastItemId = 0
-    private fun getItemId() = lastItemId++
+    private var lastSongId = 0
+    private fun getSongId() = lastSongId++
 
-    fun addItem(item: Item) : Boolean {
-        item.itemId = getItemId()
-        return items.add(item)
+    fun addSong(song: Song) : Boolean {
+        song.songId = getSongId()
+        return songs.add(song)
     }
 
-    fun numberOfItems() = items.size
+    fun numberOfSongs() = songs.size
 
-    fun findOne(id: Int): Item?{
-        return items.find{ item -> item.itemId == id }
+    fun findOne(id: Int): Song?{
+        return songs.find{ song -> song.songId == id }
     }
 
     fun delete(id: Int): Boolean {
-        return items.removeIf { item -> item.itemId == id}
+        return songs.removeIf { song -> song.songId == id}
     }
 
-    fun update(id: Int, newItem : Item): Boolean {
-        val foundItem = findOne(id)
+    fun update(id: Int, newSong : Song): Boolean {
+        val foundSong = findOne(id)
 
-        //if the object exists, use the details passed in the newItem parameter to
+        //if the object exists, use the details passed in the newSong parameter to
         //update the found object in the Set
-        if (foundItem != null){
-            foundItem.itemContents = newItem.itemContents
-            foundItem.isItemComplete = newItem.isItemComplete
+        if (foundSong != null){
+            foundSong.songContents = newSong.songContents
+            foundSong.isSongComplete = newSong.isSongComplete
             return true
         }
 
@@ -42,24 +42,24 @@ data class Note(var noteId: Int = 0,
         return false
     }
 
-    fun checkNoteCompletionStatus(): Boolean {
-        if (items.isNotEmpty()) {
-            for (item in items) {
-                if (!item.isItemComplete) {
+    fun checkPlaylistCompletionStatus(): Boolean {
+        if (songs.isNotEmpty()) {
+            for (song in songs) {
+                if (!song.isSongComplete) {
                     return false
                }
             }
         }
-        return true //a note with empty items can be archived, or all items are complete
+        return true //a playlist with empty songs can be archived, or all songs are complete
     }
 
-    fun listItems() =
-         if (items.isEmpty())  "\tNO ITEMS ADDED"
-         else  Utilities.formatSetString(items)
+    fun listSongs() =
+         if (songs.isEmpty())  "\tNO SongS ADDED"
+         else  Utilities.formatSetString(songs)
 
     override fun toString(): String {
-        val archived = if (isNoteArchived) 'Y' else 'N'
-        return "$noteId: $noteTitle, Priority($notePriority), Category($noteCategory), Archived($archived) \n${listItems()}"
+        val archived = if (isPlaylistArchived) 'Y' else 'N'
+        return "$playlistId: $playlistTitle, Priority($playlistPriority), Category($playlistCategory), Archived($archived) \n${listSongs()}"
     }
 
 }

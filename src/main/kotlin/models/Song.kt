@@ -1,13 +1,13 @@
 package models
 
-data class Item (var itemId: Int = 0, var itemContents : String, var isItemComplete: Boolean = false){
+data class Song (var songId: Int = 0, var songContents : String, var isSongComplete: Boolean = false){
 
     override fun toString(): String {
         //TODO Lift Return out in labs
-        if (isItemComplete)
-            return "$itemId: $itemContents (Complete)"
+        if (isSongComplete)
+            return "$songId: $songContents (Complete)"
          else
-            return "$itemId: $itemContents (TODO)"
+            return "$songId: $songContents (TODO)"
     }
 
 }
