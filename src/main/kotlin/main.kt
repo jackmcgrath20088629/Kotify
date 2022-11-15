@@ -5,6 +5,10 @@ import utils.ScannerInput.readNextLine
 import kotlin.system.exitProcess
 import models.Playlist
 import models.Song
+//Imports for text styles and colors by https://github.com/ajalt/mordant
+import com.github.ajalt.mordant.rendering.TextColors.*
+import com.github.ajalt.mordant.rendering.TextStyles.*
+import com.github.ajalt.mordant.rendering.TextColors.Companion.rgb
 
 private val playlistAPI = PlaylistAPI()
 
@@ -13,17 +17,18 @@ fun main() = runMenu()
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
-            1 -> addPlaylist()
-            2 -> listPlaylists()
-            3 -> updatePlaylist()
-            4 -> deletePlaylist()
-            5 -> archivePlaylist()
-            6 -> addSongToPlaylist()
-            7 -> updateSongContentsInPlaylist()
-            8 -> deleteASong()
-            9 -> markSongStatus()
-            10 -> searchPlaylists()
-            15 -> searchSongs()
+            1 -> playlistMenu()
+            2 -> songMenu()
+            //2 -> listPlaylists()
+            //3 -> updatePlaylist()
+            //4 -> deletePlaylist()
+            //5 -> archivePlaylist()
+            //6 -> addSongToPlaylist()
+            //7 -> updateSongContentsInPlaylist()
+            //8 -> deleteASong()
+            //9 -> markSongStatus()
+            //10 -> searchPlaylists()
+            //15 -> searchSongs()
             //16 -> listToDoSongs()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
@@ -31,42 +36,145 @@ fun runMenu() {
     } while (true)
 }
 
+//val style = black on (rgb("#1DB954")).bg
+
 fun mainMenu() = readNextInt(
     """ 
          > -----------------------------------------------------  
          > |                 Welcome to Kotify                 |
          > -----------------------------------------------------  
-         > | PLAYLIST MENU                                     |
-         > |   1) Add a Playlist                               |
-         > |   2) List Playlists                               |
-         > |   3) Update a Playlist                            |
-         > |   4) Delete a Playlist                            |
-         > |   5) Archive a Playlist                           |
-         > -----------------------------------------------------  
-         > | SONG MENU                                         | 
-         > |   6) Add song to a playlist                       |
-         > |   7) Update song contents on a playlist           |
-         > |   8) Delete song from a playlist                  |
-         > -----------------------------------------------------  
-         > | REPORT MENU FOR PLAYLISTS                         | 
-         > |   10) Search for all songs (by song title)        |
-         > |   11) List                                        |
-         > |   12) .....                                       |
-         > |   13) .....                                       |
-         > |   14) .....                                       |
-         > -----------------------------------------------------  
-         > | REPORT MENU FOR SONGS                             |                                
-         > |   15) Search for all songs (by song description)  |
-         > |   16) List TODO songs                             |
-         > -----------------------------------------------------  
+         > |   1) PLAYLIST MENU                                |
+         > |   2) SONGS MENU                                   |
+	     > -----------------------------------------------------
          > |   0) Exit                                         |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
 )
 
-//------------------------------------
-//playlist MENU
-//------------------------------------
+//----------------------------------//
+//PLAYLIST MENUS                    //
+//----------------------------------//
+fun playlistMenu() {
+        val option = readNextInt(
+            """
+                  > ------------------------------------
+                  > |          PLAYLIST MENU           |
+                  > ------------------------------------
+                  > |   1) Create a playlist           |
+                  > |   2) Update a playlist           |
+                  > |   3) Delete a playlist           |
+                  > |   4) View playlists              |
+                  > ------------------------------------
+                  >     0) Back                        |
+                  > ------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+           // 1 -> addPlaylist()
+           // 2 -> updatePlaylist()
+           // 3 -> deletePlaylist()
+           // 4 -> viewPlaylistMenu()
+            0 -> mainMenu()
+            else -> println("Invalid option entered: $option")
+        }
+    }
+fun viewPlaylistMenu() {
+    if (playlistAPI.numberOfPlaylists() > 0) {
+        val option = readNextInt(
+            """
+                  > ------------------------------------
+                  > |          PLAYLIST MENU           |
+                  > ------------------------------------
+                  > |   1) Search for a playlist       | 
+                  > |   2) View all Playlists          |
+                  > |   3) View all downloaded         |
+                  > |   4) View playlists by rating    |
+                  > |   5) View playlist by genre      |
+                  > ------------------------------------
+                  > |    0) Back                       |
+                  > ------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+           // 1 -> addPlaylist() //search for a playlist
+           // 2 -> updatePlaylist() // list all
+           // 3 -> deletePlaylist() // view by status of downloaded or not (archived)
+           // 4 -> () //view playlists by rating (priority)
+           // 5 -> () //view playlists by genre (category/status?)
+            0 -> playlistMenu()
+            else -> println("Invalid option entered: $option")
+        }
+    } else {
+        println("Option Invalid - No playlists stored")
+    }
+}
+
+//----------------------------------//
+//SONG MENUS                        //
+//----------------------------------//
+fun songMenu() {
+        val option = readNextInt(
+            """
+                  > ------------------------------------
+                  > |           SONG MENU              |
+                  > ------------------------------------
+                  > |   1) Add song a playlist         |
+                  > |   2) Update a songs information  |
+                  > |   3) Delete a song               |
+                  > |   4) View songs                  |
+                  > ------------------------------------
+                  > |    0) Back                       |
+                  > ------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+           // 1 -> addSong()
+           // 2 -> updatePlaylist()
+           // 3 -> deletePlaylist()
+           // 4 -> viewSongMenu()
+            0 -> mainMenu()
+            else -> println("Invalid option entered: $option")
+        }
+    }
+fun viewSongMenu() {
+    if (playlistAPI.numberOfPlaylists() > 0) {
+        val option = readNextInt(
+            """
+                  > ------------------------------------
+                  > |           SONG MENU              |
+                  > ------------------------------------
+                  > |   1) Search for a Song           | 
+                  > |   2) View all songs              |
+                  > |   3) View all downloaded         |
+                  > |   4) View song by artist         |
+                  > |   5) View songs by genre         |
+                  > ------------------------------------
+                  > |    0) Back                       |
+                  > ------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+           // 1 -> addPlaylist() //search for a playlist
+           // 2 -> updatePlaylist() // list all
+           // 3 -> deletePlaylist() // view by status of downloaded or not (archived)
+           // 4 -> () //view playlists by rating (priority)
+           // 5 -> () //view playlists by genre (category/status?)
+            0 -> songMenu()
+            else -> println("Invalid option entered: $option")
+        }
+    } else {
+        println("Option Invalid - No playlists stored")
+    }
+}
+
+//----------------------------------//
+//PLAYLIST FEATURES                 //
+//----------------------------------//
+
 fun addPlaylist() {
     val playlistTitle = readNextLine("Enter playlists title: ")
     val playlistPriority = readNextInt("Enter priority: ")

@@ -13,6 +13,8 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    //dependency for text styles and colors
+    implementation("com.github.ajalt.mordant:mordant:2.0.0-beta7")
 }
 
 tasks.test {
