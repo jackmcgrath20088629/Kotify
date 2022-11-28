@@ -3,6 +3,7 @@ package controllers
 import utils.Utilities.formatListString
 import java.util.ArrayList
 import models.Playlist
+import persistence.Serializer
 
 
 class PlaylistAPI() {
@@ -129,6 +130,16 @@ class PlaylistAPI() {
             }
         }
         return numberOfToDoSongs
+    }
+
+    @Throws(Exception::class)
+    fun load() {
+        playlists = serializer.read() as ArrayList<Playlist>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(playlists)
     }
 
 }
