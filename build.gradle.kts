@@ -13,6 +13,12 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+        //logging
+    implementation("io.github.microutils:kotlin-logging:2.1.23")
+    implementation("org.slf4j:slf4j-simple:1.7.36")
+    //For Streaming to xml and json
+    implementation("org.codehaus.jettison:jettison:1.4.1")
+    implementation("com.thoughtworks.xstream:xstream:1.4.18")
     //dependency for text styles and colors
     implementation("com.github.ajalt.mordant:mordant:2.0.0-beta7")
 }

@@ -9,8 +9,15 @@ import models.Song
 import com.github.ajalt.mordant.rendering.TextColors.*
 import com.github.ajalt.mordant.rendering.TextStyles.*
 import com.github.ajalt.mordant.rendering.TextColors.Companion.rgb
+import mu.KotlinLogging
+import persistence.JSONSerializer
+import java.io.File
 
-private val playlistAPI = PlaylistAPI()
+//private val playlistAPI = PlaylistAPI()
+
+private val logger = KotlinLogging.logger {}
+// private val playlistAPI = PlaylistAPI(XMLSerializer(File("playlists.xml")))
+//private val playlistAPI = PlaylistAPI(JSONSerializer(File("playlists.json")))
 
 fun main() = runMenu()
 
