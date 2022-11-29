@@ -6,9 +6,10 @@ import models.Playlist
 import persistence.Serializer
 
 
-class PlaylistAPI() {
+class PlaylistAPI(serializerType: Serializer) {
 
     private var playlists = ArrayList<Playlist>()
+    private var serializer: Serializer = serializerType
 
     // ----------------------------------------------
     //  For Managing the id internally in the program
@@ -33,7 +34,7 @@ class PlaylistAPI() {
         // if the playlist exists, use the playlist details passed as parameters to update the found playlist in the ArrayList.
         if ((foundPlaylist != null) && (playlist != null)) {
             foundPlaylist.playlistTitle = playlist.playlistTitle
-            foundPlaylist.playlistPriority = playlist.playlistPriority
+            foundPlaylist.playlistRating = playlist.playlistRating
             foundPlaylist.playlistCategory = playlist.playlistCategory
             return true
         }

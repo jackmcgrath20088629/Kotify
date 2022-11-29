@@ -17,7 +17,7 @@ import java.io.File
 
 private val logger = KotlinLogging.logger {}
 // private val playlistAPI = PlaylistAPI(XMLSerializer(File("playlists.xml")))
-//private val playlistAPI = PlaylistAPI(JSONSerializer(File("playlists.json")))
+private val playlistAPI = PlaylistAPI(JSONSerializer(File("playlists.json")))
 
 fun main() = runMenu()
 
@@ -108,7 +108,7 @@ fun viewPlaylistMenu() {
            // 1 -> addPlaylist() //search for a playlist
            // 2 -> updatePlaylist() // list all
            // 3 -> deletePlaylist() // view by status of downloaded or not (archived)
-           // 4 -> () //view playlists by rating (priority)
+           // 4 -> () //view playlists by rating (rating)
            // 5 -> () //view playlists by genre (category/status?)
             0 -> playlistMenu()
             else -> println("Invalid option entered: $option")
@@ -168,7 +168,7 @@ fun viewSongMenu() {
            // 1 -> addPlaylist() //search for a playlist
            // 2 -> updatePlaylist() // list all
            // 3 -> deletePlaylist() // view by status of downloaded or not (archived)
-           // 4 -> () //view playlists by rating (priority)
+           // 4 -> () //view playlists by rating (rating)
            // 5 -> () //view playlists by genre (category/status?)
             0 -> songMenu()
             else -> println("Invalid option entered: $option")
@@ -184,9 +184,9 @@ fun viewSongMenu() {
 
 fun addPlaylist() {
     val playlistTitle = readNextLine("Enter playlists title: ")
-    val playlistPriority = readNextInt("Enter priority: ")
+    val playlistRating = readNextInt("Enter rating (from ☆ - ☆☆☆☆☆): ")
     val playlistGenre = readNextLine("Enter a genre for the playlist: ")
-    val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistPriority = playlistPriority, playlistCategory = playlistGenre))
+    val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistRating = playlistRating, playlistCategory = playlistGenre))
 
     if (isAdded) {
         println("Added Successfully")
@@ -229,11 +229,11 @@ fun updatePlaylist() {
         val id = readNextInt("Enter the id of the Playlist to update: ")
         if (playlistAPI.findPlaylist(id) != null) {
             val playlistTitle = readNextLine("Enter a title for the Playlist: ")
-            val playlistPriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+            val playlistRating = readNextInt("Enter a rating (☆ - ☆☆☆☆☆): ")
             val playlistCategory = readNextLine("Enter a category for the Playlist: ")
 
             // pass the index of the Playlist and the new Playlist details to playlistAPI for updating and check for success.
-            if (playlistAPI.update(id, Playlist(0, playlistTitle, playlistPriority, playlistCategory, false))){
+            if (playlistAPI.update(id, Playlist(0, playlistTitle, playlistRating, playlistCategory, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")
