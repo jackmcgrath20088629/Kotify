@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="ratings added">
+    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="ratings previously added - entering part 2 of this implementation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="rating-from-priority" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -80,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669726851475</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ratings previously added - entering part 2 of this implementation">
+      <created>1669818182768</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669818182771</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -99,6 +108,22 @@
     <MESSAGE value="beginning to add persistence" />
     <MESSAGE value="persistence added" />
     <MESSAGE value="ratings added" />
-    <option name="LAST_COMMIT_MESSAGE" value="ratings added" />
+    <MESSAGE value="ratings previously added - entering part 2 of this implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="ratings previously added - entering part 2 of this implementation" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt</url>
+          <line>115</line>
+          <properties class="controllers.PlaylistAPI" method="listTodoSongs">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
