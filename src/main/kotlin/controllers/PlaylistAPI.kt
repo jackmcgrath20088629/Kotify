@@ -60,6 +60,13 @@ class PlaylistAPI(serializerType: Serializer) {
         if (playlists.isEmpty()) "No playlists stored"
         else formatListString(playlists)
 
+    fun listPlaylistsBySelectedRating(rating: Int): String =
+        if (playlists.isEmpty()) "No playlists stored"
+        else {
+            val listOfPlaylists = formatListString(playlists.filter { playlist -> playlist.playlistRating == rating })
+            if (listOfPlaylists.equals("")) "No playlists with rating: $rating"
+            else "${numberOfPlaylistsByRating(rating)} playlists with rating $rating: $listOfPlaylists"
+        }
     fun listActivePlaylists() =
         if (numberOfActivePlaylists() == 0) "No active playlists stored"
         else formatListString(playlists.filter { playlist -> !playlist.isPlaylistArchived })
@@ -69,12 +76,12 @@ class PlaylistAPI(serializerType: Serializer) {
         else formatListString(playlists.filter { playlist -> playlist.isPlaylistArchived })
 
     // ----------------------------------------------
-    //  COUNTING METHODS FOR Playlist ArrayList
+    //  COUNTING METHODS - PLAYLISTS
     // ----------------------------------------------
     fun numberOfPlaylists() = playlists.size
     fun numberOfArchivedPlaylists(): Int = playlists.count { playlist: Playlist -> playlist.isPlaylistArchived }
     fun numberOfActivePlaylists(): Int = playlists.count { playlist: Playlist -> !playlist.isPlaylistArchived }
-
+    fun numberOfPlaylistsByRating(rating: Int): Int = playlists.count { r: Playlist -> r.playlistRating == rating }
     // ----------------------------------------------
     //  SEARCHING METHODS
     // ---------------------------------------------
@@ -84,7 +91,9 @@ class PlaylistAPI(serializerType: Serializer) {
        formatListString(
             playlists.filter { playlist -> playlist.playlistTitle.contains(searchString, ignoreCase = true) }
         )
-
+    // ----------------------------------------------
+    //  SEARCHING METHODS FOR songS
+    // ----------------------------------------------
     fun searchSongByContents(searchString: String): String {
         return if (numberOfPlaylists() == 0) "No playlists stored"
         else {
@@ -132,7 +141,9 @@ class PlaylistAPI(serializerType: Serializer) {
         }
         return numberOfToDoSongs
     }
-
+    // ----------------------------------------------
+    //  LOAD / SAVE
+    // ----------------------------------------------
     @Throws(Exception::class)
     fun load() {
         playlists = serializer.read() as ArrayList<Playlist>
