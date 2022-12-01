@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="Ratings have been improved upon">
+    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="Genres have been added and implemented - search function now available">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/GenreUtility.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/ValidateInput.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/models/Playlist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/models/Playlist.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +27,8 @@
         <option value="Kotlin File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -53,6 +56,11 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="utils" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -97,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669831548208</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Genres have been added and implemented - search function now available">
+      <created>1669906823697</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669906823698</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,14 +133,15 @@
     <MESSAGE value="ratings added" />
     <MESSAGE value="ratings previously added - entering part 2 of this implementation" />
     <MESSAGE value="Ratings have been improved upon" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ratings have been improved upon" />
+    <MESSAGE value="Genres have been added and implemented - search function now available" />
+    <option name="LAST_COMMIT_MESSAGE" value="Genres have been added and implemented - search function now available" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-function">
           <url>file://$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt</url>
-          <line>120</line>
+          <line>121</line>
           <properties class="controllers.PlaylistAPI" method="listTodoSongs">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

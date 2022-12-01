@@ -12,6 +12,7 @@ import com.github.ajalt.mordant.rendering.TextColors.Companion.rgb
 import mu.KotlinLogging
 import persistence.JSONSerializer
 import java.io.File
+import utils.ValidateInput.readValidGenre
 
 //private val playlistAPI = PlaylistAPI()
 
@@ -187,7 +188,7 @@ fun viewSongMenu() {
 fun addPlaylist() {
     val playlistTitle = readNextLine("Enter playlists title: ")
     val playlistRating = readNextInt("Enter numerical rating  (from ☆ - ☆☆☆☆☆): ")
-    val playlistGenre = readNextLine("Enter a genre for the playlist: ")
+    val playlistGenre = readValidGenre("Enter a genre for the playlist: ")
     val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistRating = playlistRating, playlistGenre = playlistGenre))
 
     if (isAdded) {
