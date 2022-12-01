@@ -71,6 +71,7 @@ fun playlistMenu() {
                   > |   2) Update a playlist           |
                   > |   3) Delete a playlist           |
                   > |   4) View playlists              |
+                  > |   5) Download a playlist         |
                   > ------------------------------------
                   >     0) Back                        |
                   > ------------------------------------
@@ -82,6 +83,7 @@ fun playlistMenu() {
             2 -> updatePlaylist()
             3 -> deletePlaylist()
             4 -> viewPlaylistMenu()
+            5 -> archivePlaylist()
             0 -> mainMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -109,7 +111,7 @@ fun viewPlaylistMenu() {
             2 -> listAllPlaylists() // list all
            // 3 -> listDownloaded() // view by status of downloaded or not (archived)
             4 -> listRating() //view playlists by rating (rating)
-           // 5 -> listGenre() //view playlists by genre (category/status?)
+            5 -> searchPlaylistsByGenre() //search for a playlist
             0 -> playlistMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -169,7 +171,7 @@ fun viewSongMenu() {
            // 2 -> updatePlaylist() // list all
            // 3 -> deletePlaylist() // view by status of downloaded or not (archived)
            // 4 -> () //view playlists by rating (rating)
-           // 5 -> () //view playlists by genre (category/status?)
+           // 5 -> () //view playlists by genre (genre/status?)
             0 -> songMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -186,7 +188,7 @@ fun addPlaylist() {
     val playlistTitle = readNextLine("Enter playlists title: ")
     val playlistRating = readNextInt("Enter numerical rating  (from ☆ - ☆☆☆☆☆): ")
     val playlistGenre = readNextLine("Enter a genre for the playlist: ")
-    val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistRating = playlistRating, playlistCategory = playlistGenre))
+    val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistRating = playlistRating, playlistGenre = playlistGenre))
 
     if (isAdded) {
         println("Added Successfully")
@@ -258,6 +260,18 @@ fun searchPlaylistsByTitle() {
         println(searchResults)
     }
 }
+
+fun searchPlaylistsByGenre() {
+    val searchGenre = readNextLine("Enter the genre you wish to search for: ")
+    val searchResults = playlistAPI.searchPlaylistsByGenre(searchGenre)
+    if (searchResults.isEmpty()) {
+        println("No playlists found - please input one of the following: Hip-Hop, R&B, Pop, Rock, Jazz or Other")
+    } else {
+        println(searchResults)
+    }
+}
+
+
 fun updatePlaylist() {
     listPlaylists()
     if (playlistAPI.numberOfPlaylists() > 0) {
@@ -266,10 +280,10 @@ fun updatePlaylist() {
         if (playlistAPI.findPlaylist(id) != null) {
             val playlistTitle = readNextLine("Enter a title for the Playlist: ")
             val playlistRating = readNextInt("Enter a rating (☆ - ☆☆☆☆☆): ")
-            val playlistCategory = readNextLine("Enter a category for the Playlist: ")
+            val playlistGenre = readNextLine("Enter a genre for the Playlist: ")
 
             // pass the index of the Playlist and the new Playlist details to playlistAPI for updating and check for success.
-            if (playlistAPI.update(id, Playlist(0, playlistTitle, playlistRating, playlistCategory, false))){
+            if (playlistAPI.update(id, Playlist(0, playlistTitle, playlistRating, playlistGenre, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")
