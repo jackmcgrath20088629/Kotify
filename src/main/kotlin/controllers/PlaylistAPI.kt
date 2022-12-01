@@ -35,7 +35,7 @@ class PlaylistAPI(serializerType: Serializer) {
         if ((foundPlaylist != null) && (playlist != null)) {
             foundPlaylist.playlistTitle = playlist.playlistTitle
             foundPlaylist.playlistRating = playlist.playlistRating
-            foundPlaylist.playlistCategory = playlist.playlistCategory
+            foundPlaylist.playlistGenre = playlist.playlistGenre
             return true
         }
 
@@ -90,6 +90,11 @@ class PlaylistAPI(serializerType: Serializer) {
     fun searchPlaylistsByTitle(searchString: String) =
        formatListString(
             playlists.filter { playlist -> playlist.playlistTitle.contains(searchString, ignoreCase = true) }
+        )
+
+    fun searchPlaylistsByGenre(searchString: String) =
+        formatListString(
+            playlists.filter { playlist -> playlist.playlistGenre.contains(searchString, ignoreCase = true) }
         )
     // ----------------------------------------------
     //  SEARCHING METHODS FOR songS

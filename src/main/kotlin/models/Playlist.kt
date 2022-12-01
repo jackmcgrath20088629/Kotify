@@ -5,7 +5,7 @@ import utils.Utilities
 data class Playlist(var playlistId: Int = 0,
                     var playlistTitle: String,
                     var playlistRating: Int,
-                    var playlistCategory: String,
+                    var playlistGenre: String,
                     var isPlaylistArchived: Boolean = false,
                     var songs : MutableSet<Song> = mutableSetOf())
 {
@@ -59,7 +59,7 @@ data class Playlist(var playlistId: Int = 0,
 
     override fun toString(): String {
         val archived = if (isPlaylistArchived) 'Y' else 'N'
-        return "$playlistId: $playlistTitle, Rating($playlistRating), Category($playlistCategory), Archived($archived) \n${listSongs()}"
+        return "$playlistId: $playlistTitle, Rating($playlistRating), Genre($playlistGenre), Archived($archived) \n${listSongs()}"
     }
 
 }
