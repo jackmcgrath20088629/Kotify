@@ -26,9 +26,10 @@ class PlaylistAPI(serializerType: Serializer) {
         return playlists.add(playlist)
     }
 
-    fun delete(id: Int) = playlists.removeIf { playlist -> playlist.playlistId == id }
 
-    fun update(id: Int, playlist: Playlist?): Boolean {
+    fun deletePlaylist(id: Int) = playlists.removeIf { playlist -> playlist.playlistId == id }
+
+    fun updatePlaylist(id: Int, playlist: Playlist?): Boolean {
         // find the playlist object by the index number
         val foundPlaylist = findPlaylist(id)
 
