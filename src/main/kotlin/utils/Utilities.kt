@@ -4,6 +4,14 @@ import models.Song
 
 object Utilities {
 
+
+
+    @JvmStatic
+    fun validRange(numberToCheck: Int, min: Int, max: Int): Boolean {
+        return numberToCheck in min..max
+    }
+
+
     // Playlist: JvmStatic annotation means that the methods are static i.e. we can call them over the class
     //      name; we don't have to create an object of Utilities to use them.
 

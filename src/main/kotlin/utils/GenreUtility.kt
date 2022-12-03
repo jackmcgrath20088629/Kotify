@@ -3,11 +3,11 @@ package utils
 object GenreUtility {
 
     @JvmStatic
-    val categories = setOf("Hip-Hop", "R&B", "Pop", "Rock", "Jazz", "Other" )
+    val genres = setOf("Hip-Hop", "R&B", "Pop", "Rock", "Jazz", "Other" )
 
     @JvmStatic
     fun isValidGenre(genreToCheck: String?): Boolean {
-        for (genre in categories) {
+        for (genre in genres) {
             if (genre.equals(genreToCheck, ignoreCase = true)) {
                 return true
             }

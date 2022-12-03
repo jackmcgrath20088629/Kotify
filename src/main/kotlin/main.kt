@@ -13,6 +13,7 @@ import mu.KotlinLogging
 import persistence.JSONSerializer
 import java.io.File
 import utils.ValidateInput.readValidGenre
+import utils.readValidRating
 
 //private val playlistAPI = PlaylistAPI()
 
@@ -187,7 +188,7 @@ fun viewSongMenu() {
 
 fun addPlaylist() {
     val playlistTitle = readNextLine("Enter playlists title: ")
-    val playlistRating = readNextInt("Enter numerical rating  (from ☆ - ☆☆☆☆☆): ")
+    val playlistRating = readValidRating("Enter numerical rating  (from ☆ - ☆☆☆☆☆): ")
     val playlistGenre = readValidGenre("Enter a genre for the playlist: ")
     val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistRating = playlistRating, playlistGenre = playlistGenre))
 
@@ -284,7 +285,7 @@ fun updatePlaylist() {
             val playlistGenre = readNextLine("Enter a genre for the Playlist: ")
 
             // pass the index of the Playlist and the new Playlist details to playlistAPI for updating and check for success.
-            if (playlistAPI.update(id, Playlist(0, playlistTitle, playlistRating, playlistGenre, false))){
+            if (playlistAPI.updatePlaylist(id, Playlist(0, playlistTitle, playlistRating, playlistGenre, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -301,7 +302,7 @@ fun deletePlaylist() {
         // only ask the user to choose the Playlist to delete if Playlists exist
         val id = readNextInt("Enter the id of the Playlist to delete: ")
         // pass the index of the Playlist to playlistAPI for deleting and check for success.
-        val playlistToDelete = playlistAPI.delete(id)
+        val playlistToDelete = playlistAPI.deletePlaylist(id)
         if (playlistToDelete) {
             println("Delete Successful!")
         } else {
@@ -309,6 +310,7 @@ fun deletePlaylist() {
         }
     }
 }
+
 
 fun archivePlaylist() { //download
     listActivePlaylists()
