@@ -111,22 +111,22 @@ class PlaylistAPITest {
         }
 
         @Test
-        fun `listArchivedPlaylists returns no archived playlists when ArrayList is empty`() {
-            assertEquals(0, emptyPlaylists!!.numberOfArchivedPlaylists())
+        fun `listDownloadedPlaylists returns no downloaded playlists when ArrayList is empty`() {
+            assertEquals(0, emptyPlaylists!!.numberOfDownloadedPlaylists())
             assertTrue(
-                emptyPlaylists!!.listArchivedPlaylists().lowercase().contains("no archived playlists")
+                emptyPlaylists!!.listDownloadedPlaylists().lowercase().contains("no downloaded playlists")
             )
         }
 
         @Test
-        fun `listArchivedPlaylists returns archived playlists when ArrayList has archived playlists stored`() {
-            assertEquals(2, populatedPlaylists!!.numberOfArchivedPlaylists())
-            val archivedPlaylistsString = populatedPlaylists!!.listArchivedPlaylists().lowercase()
-            assertFalse(archivedPlaylistsString.contains("learning kotlin"))
-            assertTrue(archivedPlaylistsString.contains("code app"))
-            assertFalse(archivedPlaylistsString.contains("summer holiday"))
-            assertFalse(archivedPlaylistsString.contains("test app"))
-            assertTrue(archivedPlaylistsString.contains("Halloween"))
+        fun `listDownloadedPlaylists returns downloaded playlists when ArrayList has downloaded playlists stored`() {
+            assertEquals(2, populatedPlaylists!!.numberOfDownloadedPlaylists())
+            val downloadedPlaylistsString = populatedPlaylists!!.listDownloadedPlaylists().lowercase()
+            assertFalse(downloadedPlaylistsString.contains("learning kotlin"))
+            assertTrue(downloadedPlaylistsString.contains("code app"))
+            assertFalse(downloadedPlaylistsString.contains("summer holiday"))
+            assertFalse(downloadedPlaylistsString.contains("test app"))
+            assertTrue(downloadedPlaylistsString.contains("Halloween"))
         }
 
         @Test
@@ -218,25 +218,25 @@ class PlaylistAPITest {
     }
 
     @Nested
-    inner class ArchivePlaylists {
+    inner class DownloadPlaylists {
         @Test
-        fun `archiving a playlist that does not exist returns false`() {
-            assertFalse(populatedPlaylists!!.archivePlaylist(6))
-            assertFalse(populatedPlaylists!!.archivePlaylist(-1))
-            assertFalse(emptyPlaylists!!.archivePlaylist(0))
+        fun `downloading a playlist that does not exist returns false`() {
+            assertFalse(populatedPlaylists!!.downloadPlaylist(6))
+            assertFalse(populatedPlaylists!!.downloadPlaylist(-1))
+            assertFalse(emptyPlaylists!!.downloadPlaylist(0))
         }
 
         @Test
-        fun `archiving an already archived playlist returns false`() {
-            assertTrue(populatedPlaylists!!.findPlaylist(2)!!.isPlaylistArchived)
-            assertFalse(populatedPlaylists!!.archivePlaylist(2))
+        fun `downloading an already downloaded playlist returns false`() {
+            assertTrue(populatedPlaylists!!.findPlaylist(2)!!.isPlaylistDownloaded)
+            assertFalse(populatedPlaylists!!.downloadPlaylist(2))
         }
 
         @Test
-        fun `archiving an active playlist that exists returns true and archives`() {
-            assertFalse(populatedPlaylists!!.findPlaylist(1)!!.isPlaylistArchived)
-            assertTrue(populatedPlaylists!!.archivePlaylist(1))
-            assertTrue(populatedPlaylists!!.findPlaylist(1)!!.isPlaylistArchived)
+        fun `downloading an active playlist that exists returns true and downloads`() {
+            assertFalse(populatedPlaylists!!.findPlaylist(1)!!.isPlaylistDownloaded)
+            assertTrue(populatedPlaylists!!.downloadPlaylist(1))
+            assertTrue(populatedPlaylists!!.findPlaylist(1)!!.isPlaylistDownloaded)
         }
     }
 
@@ -330,9 +330,9 @@ class PlaylistAPITest {
         }
 
         @Test
-        fun numberOfArchivedPlaylistsCalculatedCorrectly() {
-            assertEquals(2, populatedPlaylists!!.numberOfArchivedPlaylists())
-            assertEquals(0, emptyPlaylists!!.numberOfArchivedPlaylists())
+        fun numberOfDownloadedPlaylistsCalculatedCorrectly() {
+            assertEquals(2, populatedPlaylists!!.numberOfDownloadedPlaylists())
+            assertEquals(0, emptyPlaylists!!.numberOfDownloadedPlaylists())
         }
 
         @Test

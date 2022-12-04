@@ -45,11 +45,11 @@ class PlaylistAPI(serializerType: Serializer) {
         return false
     }
 
-    fun archivePlaylist(id: Int): Boolean {
+    fun downloadPlaylist(id: Int): Boolean {
         val foundPlaylist = findPlaylist(id)
-        if (( foundPlaylist != null) && (!foundPlaylist.isPlaylistArchived)
+        if (( foundPlaylist != null) && (!foundPlaylist.isPlaylistDownloaded)
             && ( foundPlaylist.checkPlaylistCompletionStatus())) {
-              foundPlaylist.isPlaylistArchived = true
+              foundPlaylist.isPlaylistDownloaded = true
               return true
         }
         return false
@@ -71,19 +71,19 @@ class PlaylistAPI(serializerType: Serializer) {
         }
     fun listActivePlaylists() =
         if (numberOfActivePlaylists() == 0) "No active playlists stored"
-        else formatListString(playlists.filter { playlist -> !playlist.isPlaylistArchived })
+        else formatListString(playlists.filter { playlist -> !playlist.isPlaylistDownloaded })
 
-    fun listArchivedPlaylists() =
-        if (numberOfArchivedPlaylists() == 0) "No archived playlists stored"
-        else formatListString(playlists.filter { playlist -> playlist.isPlaylistArchived })
+    fun listDownloadedPlaylists() =
+        if (numberOfDownloadedPlaylists() == 0) "No downloaded playlists stored"
+        else formatListString(playlists.filter { playlist -> playlist.isPlaylistDownloaded })
 
     // ----------------------------------------------
     //  COUNTING METHODS - PLAYLISTS
     // ----------------------------------------------
 
     fun numberOfPlaylists() = playlists.size
-    fun numberOfArchivedPlaylists(): Int = playlists.count { playlist: Playlist -> playlist.isPlaylistArchived }
-    fun numberOfActivePlaylists(): Int = playlists.count { playlist: Playlist -> !playlist.isPlaylistArchived }
+    fun numberOfDownloadedPlaylists(): Int = playlists.count { playlist: Playlist -> playlist.isPlaylistDownloaded }
+    fun numberOfActivePlaylists(): Int = playlists.count { playlist: Playlist -> !playlist.isPlaylistDownloaded }
     fun numberOfPlaylistsByRating(rating: Int): Int = playlists.count { r: Playlist -> r.playlistRating == rating }
 
     fun numberOfHipHop() = playlists.count { playlist -> playlist.playlistGenre == "Hip-Hop" }

@@ -75,7 +75,7 @@ fun playlistMenu() {
             2 -> updatePlaylist()
             3 -> deletePlaylist()
             4 -> viewPlaylistMenu()
-            5 -> archivePlaylist()
+            5 -> downloadPlaylist()
             0 -> mainMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -106,7 +106,7 @@ fun viewPlaylistMenu() {
         when (option) {
             1 -> searchPlaylistsByTitle() //search for a playlist
             2 -> listAllPlaylists() // list all
-           // 3 -> listDownloaded() // view by status of downloaded or not (archived)
+           // 3 -> listDownloaded() // view by status of downloaded or not (downloaded)
             4 -> listRating() //view playlists by rating (rating)
             5 -> searchPlaylistsByGenre() //search for a playlist by genre
             //Counts
@@ -171,7 +171,7 @@ fun viewSongMenu() {
         when (option) {
            // 1 -> addPlaylist() //search for a playlist
            // 2 -> updatePlaylist() // list all
-           // 3 -> deletePlaylist() // view by status of downloaded or not (archived)
+           // 3 -> deletePlaylist() // view by status of downloaded or not (downloaded)
            // 4 -> () //view playlists by rating (rating)
            // 5 -> () //view playlists by genre (genre/status?)
             0 -> songMenu()
@@ -230,7 +230,7 @@ fun listRating() {
 
 fun listAllPlaylists() = println(playlistAPI.listAllPlaylists())
 fun listActivePlaylists() = println(playlistAPI.listActivePlaylists()) //needed for downloaded
-fun listArchivedPlaylists() = println(playlistAPI.listArchivedPlaylists()) //downloaded
+fun listDownloadedPlaylists() = println(playlistAPI.listDownloadedPlaylists()) //downloaded
 
 //Counting methods
 fun countAllPlaylists() = println(playlistAPI.numberOfPlaylists())
@@ -340,16 +340,16 @@ fun deletePlaylist() {
 }
 
 
-fun archivePlaylist() { //download
+fun downloadPlaylist() { //download
     listActivePlaylists()
     if (playlistAPI.numberOfActivePlaylists() > 0) {
-        // only ask the user to choose the Playlist to archive if active Playlists exist
-        val id = readNextInt("Enter the id of the playlist to archive: ")
-        // pass the index of the Playlist to playlistAPI for archiving and check for success.
-        if (playlistAPI.archivePlaylist(id)) {
-            println("Archive Successful!")
+        // only ask the user to choose the Playlist to download if active Playlists exist
+        val id = readNextInt("Enter the id of the playlist to download: ")
+        // pass the index of the Playlist to playlistAPI for downloading and check for success.
+        if (playlistAPI.downloadPlaylist(id)) {
+            println("Download Successful!")
         } else {
-            println("Archive NOT Successful")
+            println("Download NOT Successful")
         }
     }
 }
@@ -480,8 +480,8 @@ private fun askUserToChooseActivePlaylist(): Playlist? {
     if (playlistAPI.numberOfActivePlaylists() > 0) {
         val playlist = playlistAPI.findPlaylist(readNextInt("\nEnter the id of the playlist: "))
         if (playlist != null) {
-            if (playlist.isPlaylistArchived) {
-                println("Playlist is NOT Active, it is Archived")
+            if (playlist.isPlaylistDownloaded) {
+                println("Playlist is NOT Active, it is Downloaded")
             } else {
                 return playlist //chosen playlist is active
             }
