@@ -113,7 +113,7 @@ fun viewPlaylistMenu() {
             6 -> countAllPlaylists() //counts all playlists created
             7 -> listGenres() //counts playlists per genre
             8 -> countByRating() //count playlist by rating
-           // 9 -> countDownloaded() //counts amount of playlists that are downloaded
+            9 -> countDownloaded() //counts amount of playlists that are downloaded
             0 -> playlistMenu() //back
             else -> println("Invalid option entered: $option")
         }
@@ -135,6 +135,7 @@ fun songMenu() {
                   > |   2) Update a songs information  |
                   > |   3) Delete a song               |
                   > |   4) View songs                  |
+                  > |   5) Favourite a song            |
                   > ------------------------------------
                   > |    0) Back                       |
                   > ------------------------------------
@@ -142,10 +143,11 @@ fun songMenu() {
         )
 
         when (option) {
-           // 1 -> addSong()
-           // 2 -> updatePlaylist()
-           // 3 -> deletePlaylist()
-           // 4 -> viewSongMenu()
+            1 -> addSongToPlaylist() //adds a song
+            2 -> updateSongInPlaylist() //updates the contents of a song
+            3 -> deleteASong() //deletes a song
+            4 -> viewSongMenu() //view menu of songs for listing and counting
+            5 -> markSongStatus() //Favourite a song
             0 -> mainMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -169,11 +171,11 @@ fun viewSongMenu() {
         )
 
         when (option) {
-           // 1 -> addPlaylist() //search for a playlist
-           // 2 -> updatePlaylist() // list all
-           // 3 -> deletePlaylist() // view by status of downloaded or not (downloaded)
-           // 4 -> () //view playlists by rating (rating)
-           // 5 -> () //view playlists by genre (genre/status?)
+           // 1 -> () //Search for a song
+           // 2 -> () // list all songs
+           // 3 -> ()
+           // 4 -> () //view song by artist
+           // 5 -> () //view songs by genre
             0 -> songMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -232,7 +234,7 @@ fun listAllPlaylists() = println(playlistAPI.listAllPlaylists())
 fun listActivePlaylists() = println(playlistAPI.listActivePlaylists()) //needed for downloaded
 fun listDownloadedPlaylists() = println(playlistAPI.listDownloadedPlaylists()) //downloaded
 
-//Counting methods
+//Counting
 fun countAllPlaylists() = println(playlistAPI.numberOfPlaylists())
 fun countAllHipHop() = println(playlistAPI.numberOfHipHop())
 fun countAllPop() = println(playlistAPI.numberOfPop())
@@ -240,6 +242,7 @@ fun countAllRock() = println(playlistAPI.numberOfRock())
 fun countAllJazz() = println(playlistAPI.numberOfJazz())
 fun countAllRnB() = println(playlistAPI.numberOfRnB())
 fun countAllOther() = println(playlistAPI.numberOfOther())
+fun countDownloaded() = println(playlistAPI.numberOfDownloadedPlaylists())
 
 fun countByRating() {
     if (playlistAPI.numberOfPlaylists() > 0) {
@@ -309,8 +312,8 @@ fun updatePlaylist() {
         val id = readNextInt("Enter the ID of the Playlist to update: ")
         if (playlistAPI.findPlaylist(id) != null) {
             val playlistTitle = readNextLine("Enter a title for the Playlist: ")
-            val playlistRating = readNextInt("Enter a rating (☆ - ☆☆☆☆☆): ")
-            val playlistGenre = readNextLine("Enter a genre for the Playlist: ")
+            val playlistRating = readValidRating("Enter a rating (☆ - ☆☆☆☆☆): ")
+            val playlistGenre = readValidGenre("Enter a genre for the Playlist: ")
 
             // pass the index of the Playlist and the new Playlist details to playlistAPI for updating and check for success.
             if (playlistAPI.updatePlaylist(id, Playlist(0, playlistTitle, playlistRating, playlistGenre, false))){
@@ -360,19 +363,20 @@ fun downloadPlaylist() { //download
 private fun addSongToPlaylist() {
     val playlist: Playlist? = askUserToChooseActivePlaylist()
     if (playlist != null) {
-        if (playlist.addSong(Song(songContents = readNextLine("\t Song Contents: "))))
+        if (playlist.addSong(Song(songTitle = readNextLine("\t Song Title: "), songArtist = readNextLine("\t Song Artist: "))))
             println("Add Successful!")
         else println("Add NOT Successful")
     }
 }
 
-fun updateSongContentsInPlaylist() {
+fun updateSongInPlaylist() {
     val playlist: Playlist? = askUserToChooseActivePlaylist()
     if (playlist != null) {
         val song: Song? = askUserToChooseSong(playlist)
         if (song != null) {
-            val newContents = readNextLine("Enter new contents: ")
-            if (playlist.update(song.songId, Song(songContents = newContents))) {
+            val newTitle = readNextLine("Enter new title: ")
+            val newArtist = readNextLine("Enter new artist: ")
+            if (playlist.update(song.songId, Song(songTitle = newTitle, songArtist = newArtist))) {
                 println("Song contents updated")
             } else {
                 println("Song contents NOT updated")
@@ -398,21 +402,21 @@ fun deleteASong() {
     }
 }
 
-fun markSongStatus() {
+fun markSongStatus() { //FAVS
     val playlist: Playlist? = askUserToChooseActivePlaylist()
     if (playlist != null) {
         val song: Song? = askUserToChooseSong(playlist)
         if (song != null) {
             var changeStatus = 'X'
-            if (song.isSongComplete) {
-                changeStatus = readNextChar("The song is currently complete...do you want to mark it as TODO?")
+            if (song.isSongFavoured) {
+                changeStatus = readNextChar("The song is currently Favourited ...do you want to mark it as un-favourite?")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    song.isSongComplete = false
+                    song.isSongFavoured = false
             }
             else {
-                changeStatus = readNextChar("The song is currently TODO...do you want to mark it as Complete?")
+                changeStatus = readNextChar("The song is currently un-favourited...do you want to mark it as Favourite?")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    song.isSongComplete = true
+                    song.isSongFavoured = true
             }
         }
     }
@@ -455,12 +459,6 @@ fun searchSongs() {
     }
 }
 
-fun listToDoSongs(){
-    if (playlistAPI.numberOfToDoSongs() > 0) {
-        println("Total TODO Songs: ${playlistAPI.numberOfToDoSongs()}")
-    }
-    println(playlistAPI.listTodoSongs())
-}
 
 
 //------------------------------------
@@ -503,3 +501,9 @@ private fun askUserToChooseSong(playlist: Playlist): Song? {
     }
 }
 
+//fun listFavouriteSongs(){
+//    if (playlistAPI.numberOfFavouriteSongs() > 0) {
+//        println("Your favourite songs are: ${playlistAPI.numberOfFavouriteSongs()}")
+//    }
+//    println(playlistAPI.listFavouriteSongs())
+//}

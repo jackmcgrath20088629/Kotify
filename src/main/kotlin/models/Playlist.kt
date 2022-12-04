@@ -33,8 +33,8 @@ data class Playlist(var playlistId: Int = 0,
         //if the object exists, use the details passed in the newSong parameter to
         //update the found object in the Set
         if (foundSong != null){
-            foundSong.songContents = newSong.songContents
-            foundSong.isSongComplete = newSong.isSongComplete
+            foundSong.songTitle = newSong.songTitle
+            foundSong.isSongFavoured = newSong.isSongFavoured
             return true
         }
 
@@ -45,7 +45,7 @@ data class Playlist(var playlistId: Int = 0,
     fun checkPlaylistCompletionStatus(): Boolean {
         if (songs.isNotEmpty()) {
             for (song in songs) {
-                if (!song.isSongComplete) {
+                if (!song.isSongFavoured) {
                     return false
                }
             }

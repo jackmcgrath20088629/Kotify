@@ -116,7 +116,7 @@ class PlaylistAPI(serializerType: Serializer) {
             var listOfPlaylists = ""
             for (playlist in playlists) {
                 for (song in playlist.songs) {
-                    if (song.songContents.contains(searchString, ignoreCase = true)) {
+                    if (song.songTitle.contains(searchString, ignoreCase = true)) {
                         listOfPlaylists += "${playlist.playlistId}: ${playlist.playlistTitle} \n\t${song}\n"
                     }
                 }
@@ -129,34 +129,34 @@ class PlaylistAPI(serializerType: Serializer) {
     // ----------------------------------------------
     //  LISTING METHODS FOR songS
     // ----------------------------------------------
-    fun listTodoSongs(): String =
-         if (numberOfPlaylists() == 0) "No playlists stored"
-         else {
-             var listOfTodoSongs = ""
-             for (playlist in playlists) {
-                 for (song in playlist.songs) {
-                     if (!song.isSongComplete) {
-                         listOfTodoSongs += playlist.playlistTitle + ": " + song.songContents + "\n"
-                     }
-                 }
-             }
-             listOfTodoSongs
-         }
+//    fun listSongs(): String =
+//         if (numberOfPlaylists() == 0) "No playlists stored"
+//         else {
+//             var listOfTodoSongs = ""
+//             for (playlist in playlists) {
+//                 for (song in playlist.songs) {
+//                     if (!song.isSongFavoured) {
+//                         listOfTodoSongs += playlist.playlistTitle + ": " + song.songTitle + "\n"
+//                     }
+//                 }
+//             }
+//             listOfTodoSongs
+//         }
 
     // ----------------------------------------------
     //  COUNTING METHODS FOR SongS
     // ----------------------------------------------
-    fun numberOfToDoSongs(): Int {
-        var numberOfToDoSongs = 0
-        for (playlist in playlists) {
-            for (song in playlist.songs) {
-                if (!song.isSongComplete) {
-                    numberOfToDoSongs++
-                }
-            }
-        }
-        return numberOfToDoSongs
-    }
+//    fun numberOfToDoSongs(): Int {
+//        var numberOfToDoSongs = 0
+//        for (playlist in playlists) {
+//            for (song in playlist.songs) {
+//                if (!song.isSongFavoured) {
+//                    numberOfToDoSongs++
+//                }
+//            }
+//        }
+//        return numberOfToDoSongs
+//    }
     // ----------------------------------------------
     //  LOAD / SAVE
     // ----------------------------------------------
