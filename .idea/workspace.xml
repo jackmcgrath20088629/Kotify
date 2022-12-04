@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="Genre Validation has been implemented in a rudimentary sense and will be improved upon/looked back on in future issues/commits">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/controllers/PlaylistAPITest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/utils/GenreUtilityTest.kt" afterDir="false" />
+    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="Rating Validation and Part 1 of JUnit testing has been implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/GenreUtility.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/GenreUtility.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/Utilities.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/Utilities.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/ValidateInput.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/ValidateInput.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +32,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="JUnit-and-RatingValidation" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -125,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669908573421</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Rating Validation and Part 1 of JUnit testing has been implemented">
+      <created>1670080606372</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670080606372</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -148,7 +148,8 @@
     <MESSAGE value="Ratings have been improved upon" />
     <MESSAGE value="Genres have been added and implemented - search function now available" />
     <MESSAGE value="Genre Validation has been implemented in a rudimentary sense and will be improved upon/looked back on in future issues/commits" />
-    <option name="LAST_COMMIT_MESSAGE" value="Genre Validation has been implemented in a rudimentary sense and will be improved upon/looked back on in future issues/commits" />
+    <MESSAGE value="Rating Validation and Part 1 of JUnit testing has been implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rating Validation and Part 1 of JUnit testing has been implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
