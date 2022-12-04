@@ -6,6 +6,7 @@ import models.Playlist
 import persistence.Serializer
 
 
+
 class PlaylistAPI(serializerType: Serializer) {
 
     private var playlists = ArrayList<Playlist>()
@@ -25,9 +26,10 @@ class PlaylistAPI(serializerType: Serializer) {
         return playlists.add(playlist)
     }
 
-    fun delete(id: Int) = playlists.removeIf { playlist -> playlist.playlistId == id }
 
-    fun update(id: Int, playlist: Playlist?): Boolean {
+    fun deletePlaylist(id: Int) = playlists.removeIf { playlist -> playlist.playlistId == id }
+
+    fun updatePlaylist(id: Int, playlist: Playlist?): Boolean {
         // find the playlist object by the index number
         val foundPlaylist = findPlaylist(id)
 
@@ -35,7 +37,7 @@ class PlaylistAPI(serializerType: Serializer) {
         if ((foundPlaylist != null) && (playlist != null)) {
             foundPlaylist.playlistTitle = playlist.playlistTitle
             foundPlaylist.playlistRating = playlist.playlistRating
-            foundPlaylist.playlistCategory = playlist.playlistCategory
+            foundPlaylist.playlistGenre = playlist.playlistGenre
             return true
         }
 
@@ -43,12 +45,12 @@ class PlaylistAPI(serializerType: Serializer) {
         return false
     }
 
-    fun archivePlaylist(id: Int): Boolean {
+    fun downloadPlaylist(id: Int): Boolean {
         val foundPlaylist = findPlaylist(id)
-        if (( foundPlaylist != null) && (!foundPlaylist.isPlaylistArchived)
+        if (( foundPlaylist != null) && (!foundPlaylist.isPlaylistDownloaded)
             && ( foundPlaylist.checkPlaylistCompletionStatus())) {
-              foundPlaylist.isPlaylistArchived = true
-              return true
+            foundPlaylist.isPlaylistDownloaded = true
+            return true
         }
         return false
     }
@@ -69,27 +71,41 @@ class PlaylistAPI(serializerType: Serializer) {
         }
     fun listActivePlaylists() =
         if (numberOfActivePlaylists() == 0) "No active playlists stored"
-        else formatListString(playlists.filter { playlist -> !playlist.isPlaylistArchived })
+        else formatListString(playlists.filter { playlist -> !playlist.isPlaylistDownloaded })
 
-    fun listArchivedPlaylists() =
-        if (numberOfArchivedPlaylists() == 0) "No archived playlists stored"
-        else formatListString(playlists.filter { playlist -> playlist.isPlaylistArchived })
+    fun listDownloadedPlaylists() =
+        if (numberOfDownloadedPlaylists() == 0) "No downloaded playlists stored"
+        else formatListString(playlists.filter { playlist -> playlist.isPlaylistDownloaded })
 
     // ----------------------------------------------
     //  COUNTING METHODS - PLAYLISTS
     // ----------------------------------------------
+
     fun numberOfPlaylists() = playlists.size
-    fun numberOfArchivedPlaylists(): Int = playlists.count { playlist: Playlist -> playlist.isPlaylistArchived }
-    fun numberOfActivePlaylists(): Int = playlists.count { playlist: Playlist -> !playlist.isPlaylistArchived }
+    fun numberOfDownloadedPlaylists(): Int = playlists.count { playlist: Playlist -> playlist.isPlaylistDownloaded }
+    fun numberOfActivePlaylists(): Int = playlists.count { playlist: Playlist -> !playlist.isPlaylistDownloaded }
     fun numberOfPlaylistsByRating(rating: Int): Int = playlists.count { r: Playlist -> r.playlistRating == rating }
+
+    fun numberOfHipHop() = playlists.count { playlist -> playlist.playlistGenre == "Hip-Hop" }
+    fun numberOfPop() = playlists.count { playlist -> playlist.playlistGenre == "Pop" }
+    fun numberOfRock() = playlists.count { playlist -> playlist.playlistGenre == "Rock" }
+    fun numberOfJazz() = playlists.count { playlist -> playlist.playlistGenre == "Jazz" }
+    fun numberOfRnB() = playlists.count { playlist -> playlist.playlistGenre == "R&B" }
+    fun numberOfOther() = playlists.count { playlist -> playlist.playlistGenre == "Other" }
+
     // ----------------------------------------------
     //  SEARCHING METHODS
     // ---------------------------------------------
     fun findPlaylist(playlistId : Int) =  playlists.find{ playlist -> playlist.playlistId == playlistId }
 
     fun searchPlaylistsByTitle(searchString: String) =
-       formatListString(
+        formatListString(
             playlists.filter { playlist -> playlist.playlistTitle.contains(searchString, ignoreCase = true) }
+        )
+
+    fun searchPlaylistsByGenre(searchString: String) =
+        formatListString(
+            playlists.filter { playlist -> playlist.playlistGenre.contains(searchString, ignoreCase = true) }
         )
     // ----------------------------------------------
     //  SEARCHING METHODS FOR songS
@@ -114,18 +130,18 @@ class PlaylistAPI(serializerType: Serializer) {
     //  LISTING METHODS FOR songS
     // ----------------------------------------------
     fun listTodoSongs(): String =
-         if (numberOfPlaylists() == 0) "No playlists stored"
-         else {
-             var listOfTodoSongs = ""
-             for (playlist in playlists) {
-                 for (song in playlist.songs) {
-                     if (!song.isSongComplete) {
-                         listOfTodoSongs += playlist.playlistTitle + ": " + song.songContents + "\n"
-                     }
-                 }
-             }
-             listOfTodoSongs
-         }
+        if (numberOfPlaylists() == 0) "No playlists stored"
+        else {
+            var listOfTodoSongs = ""
+            for (playlist in playlists) {
+                for (song in playlist.songs) {
+                    if (!song.isSongComplete) {
+                        listOfTodoSongs += playlist.playlistTitle + ": " + song.songContents + "\n"
+                    }
+                }
+            }
+            listOfTodoSongs
+        }
 
     // ----------------------------------------------
     //  COUNTING METHODS FOR SongS

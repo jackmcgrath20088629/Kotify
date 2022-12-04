@@ -12,6 +12,9 @@ import com.github.ajalt.mordant.rendering.TextColors.Companion.rgb
 import mu.KotlinLogging
 import persistence.JSONSerializer
 import java.io.File
+import utils.ValidateInput.readValidGenre
+import utils.ValidateInput.readValidRating
+
 
 //private val playlistAPI = PlaylistAPI()
 
@@ -26,17 +29,6 @@ fun runMenu() {
         when (val option = mainMenu()) {
             1 -> playlistMenu()
             2 -> songMenu()
-            //2 -> listPlaylists()
-            //3 -> updatePlaylist()
-            //4 -> deletePlaylist()
-            //5 -> archivePlaylist()
-            //6 -> addSongToPlaylist()
-            //7 -> updateSongContentsInPlaylist()
-            //8 -> deleteASong()
-            //9 -> markSongStatus()
-            //10 -> searchPlaylists()
-            //15 -> searchSongs()
-            //16 -> listToDoSongs()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -71,6 +63,7 @@ fun playlistMenu() {
                   > |   2) Update a playlist           |
                   > |   3) Delete a playlist           |
                   > |   4) View playlists              |
+                  > |   5) Download a playlist         |
                   > ------------------------------------
                   >     0) Back                        |
                   > ------------------------------------
@@ -82,6 +75,7 @@ fun playlistMenu() {
             2 -> updatePlaylist()
             3 -> deletePlaylist()
             4 -> viewPlaylistMenu()
+            5 -> downloadPlaylist()
             0 -> mainMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -92,12 +86,17 @@ fun viewPlaylistMenu() {
             """
                   > ------------------------------------
                   > |          PLAYLIST MENU           |
-                  > ------------------------------------
+                  > ------------------------------------ 
                   > |   1) Search for a playlist       | 
                   > |   2) View all Playlists          |
                   > |   3) View all downloaded         |
                   > |   4) View playlists by rating    |
                   > |   5) View playlist by genre      |
+                  > ------------------------------------
+                  > |   6) Count all playlists         |
+                  > |   7) Count by genre              |
+                  > |   8) Count by playlist rating    |
+                  > |   9) Count downloaded playlists  |
                   > ------------------------------------
                   > |    0) Back                       |
                   > ------------------------------------
@@ -107,10 +106,15 @@ fun viewPlaylistMenu() {
         when (option) {
             1 -> searchPlaylistsByTitle() //search for a playlist
             2 -> listAllPlaylists() // list all
-           // 3 -> listDownloaded() // view by status of downloaded or not (archived)
+            3 -> listDownloadedPlaylists() // view by status of downloaded or not (downloaded)
             4 -> listRating() //view playlists by rating (rating)
-           // 5 -> listGenre() //view playlists by genre (category/status?)
-            0 -> playlistMenu()
+            5 -> searchPlaylistsByGenre() //search for a playlist by genre
+            //Counts
+            6 -> countAllPlaylists() //counts all playlists created
+            7 -> listGenres() //counts playlists per genre
+            8 -> countByRating() //count playlist by rating
+           // 9 -> countDownloaded() //counts amount of playlists that are downloaded
+            0 -> playlistMenu() //back
             else -> println("Invalid option entered: $option")
         }
     } else {
@@ -167,9 +171,9 @@ fun viewSongMenu() {
         when (option) {
            // 1 -> addPlaylist() //search for a playlist
            // 2 -> updatePlaylist() // list all
-           // 3 -> deletePlaylist() // view by status of downloaded or not (archived)
+           // 3 -> deletePlaylist() // view by status of downloaded or not (downloaded)
            // 4 -> () //view playlists by rating (rating)
-           // 5 -> () //view playlists by genre (category/status?)
+           // 5 -> () //view playlists by genre (genre/status?)
             0 -> songMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -184,9 +188,9 @@ fun viewSongMenu() {
 
 fun addPlaylist() {
     val playlistTitle = readNextLine("Enter playlists title: ")
-    val playlistRating = readNextInt("Enter numerical rating  (from ☆ - ☆☆☆☆☆): ")
-    val playlistGenre = readNextLine("Enter a genre for the playlist: ")
-    val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistRating = playlistRating, playlistCategory = playlistGenre))
+    val playlistRating = readValidRating("Enter numerical rating  (from ☆ - ☆☆☆☆☆): ")
+    val playlistGenre = readValidGenre("Enter a genre for the playlist: ")
+    val isAdded = playlistAPI.add(Playlist(playlistTitle = playlistTitle, playlistRating = playlistRating, playlistGenre = playlistGenre))
 
     if (isAdded) {
         println("Added Successfully")
@@ -195,28 +199,6 @@ fun addPlaylist() {
     }
 }
 
-fun listPlaylists() {
-    if (playlistAPI.numberOfPlaylists() > 0) {
-        val option = readNextInt(
-            """
-                  > --------------------------------
-                  > |   1) View ALL playlists          |
-                  > |   2) View ACTIVE playlists       |
-                  > |   3) View ARCHIVED playlists     |
-                  > --------------------------------
-         > ==>> """.trimMargin(">")
-        )
-
-        when (option) {
-            1 -> listAllPlaylists()
-            2 -> listActivePlaylists()
-            3 -> listArchivedPlaylists()
-            else -> println("Invalid option entered: $option")
-        }
-    } else {
-        println("Option Invalid - No playlists stored")
-    }
-}
 fun listRating() {
     if (playlistAPI.numberOfPlaylists() > 0) {
         val option = readNextInt(
@@ -247,29 +229,91 @@ fun listRating() {
 }
 
 fun listAllPlaylists() = println(playlistAPI.listAllPlaylists())
-fun listActivePlaylists() = println(playlistAPI.listActivePlaylists()) //needed for downlaoded
-fun listArchivedPlaylists() = println(playlistAPI.listArchivedPlaylists()) //downloaded
-fun searchPlaylistsByTitle() {
-    val searchTitle = readNextLine("Enter the title of desired playlist: ")
-    val searchResults = playlistAPI.searchPlaylistsByTitle(searchTitle)
-    if (searchResults.isEmpty()) {
-        println("No playlists found")
+fun listActivePlaylists() = println(playlistAPI.listActivePlaylists()) //needed for downloaded
+fun listDownloadedPlaylists() = println(playlistAPI.listDownloadedPlaylists()) //downloaded
+
+//Counting methods
+fun countAllPlaylists() = println(playlistAPI.numberOfPlaylists())
+fun countAllHipHop() = println(playlistAPI.numberOfHipHop())
+fun countAllPop() = println(playlistAPI.numberOfPop())
+fun countAllRock() = println(playlistAPI.numberOfRock())
+fun countAllJazz() = println(playlistAPI.numberOfJazz())
+fun countAllRnB() = println(playlistAPI.numberOfRnB())
+fun countAllOther() = println(playlistAPI.numberOfOther())
+
+fun countByRating() {
+    if (playlistAPI.numberOfPlaylists() > 0) {
+        val option = readNextInt(
+            """
+                  > ------------------------------------------------------
+                  > |   Please enter a rating number (1 to 5)            |
+                  > |   1) - ☆                                           |
+                  > |   2) - ☆☆                                          |
+                  > |   3) - ☆☆☆                                        |
+                  > |   4) - ☆☆☆☆                                       |
+                  > |   5) - ☆☆☆☆☆                                      |
+                  > ------------------------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+            1 -> println(playlistAPI.numberOfPlaylistsByRating(1))
+            2 -> println(playlistAPI.numberOfPlaylistsByRating(2))
+            3 -> println(playlistAPI.numberOfPlaylistsByRating(3))
+            4 -> println(playlistAPI.numberOfPlaylistsByRating(4))
+            5 -> println(playlistAPI.numberOfPlaylistsByRating(5))
+
+
+            else -> println("Invalid option entered: " + option)
+        }
     } else {
-        println(searchResults)
+        println("Option Invalid - No playlists stored under this rating")
     }
 }
+
+fun listGenres() {
+    if (playlistAPI.numberOfPlaylists() > 0) {
+        val option = readNextInt(
+            """
+                  > ------------------------------------------
+                  > |   Please select a genre                |
+                  > |   1) - Hip-Hop                         |
+                  > |   2) - Pop                             |
+                  > |   3) - Rock                            |
+                  > |   4) - Jazz                            |
+                  > |   5) - R&B                             |
+                  > |   6) - Other                           |
+                  > ------------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+            1 -> println(countAllHipHop())
+            2 -> println(countAllPop())
+            3 -> println(countAllRock())
+            4 -> println(countAllJazz())
+            5 -> println(countAllRnB())
+            6 -> println(countAllOther())
+
+            else -> println("Invalid option entered: " + option)
+        }
+    } else {
+        println("Option Invalid - No playlists stored under this genre")
+    }
+}
+
 fun updatePlaylist() {
-    listPlaylists()
+    listAllPlaylists()
     if (playlistAPI.numberOfPlaylists() > 0) {
         // only ask the user to choose the Playlist if Playlists exist
         val id = readNextInt("Enter the id of the Playlist to update: ")
         if (playlistAPI.findPlaylist(id) != null) {
             val playlistTitle = readNextLine("Enter a title for the Playlist: ")
             val playlistRating = readNextInt("Enter a rating (☆ - ☆☆☆☆☆): ")
-            val playlistCategory = readNextLine("Enter a category for the Playlist: ")
+            val playlistGenre = readNextLine("Enter a genre for the Playlist: ")
 
             // pass the index of the Playlist and the new Playlist details to playlistAPI for updating and check for success.
-            if (playlistAPI.update(id, Playlist(0, playlistTitle, playlistRating, playlistCategory, false))){
+            if (playlistAPI.updatePlaylist(id, Playlist(0, playlistTitle, playlistRating, playlistGenre, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -281,12 +325,12 @@ fun updatePlaylist() {
 }
 
 fun deletePlaylist() {
-    listPlaylists()
+    listAllPlaylists()
     if (playlistAPI.numberOfPlaylists() > 0) {
         // only ask the user to choose the Playlist to delete if Playlists exist
         val id = readNextInt("Enter the id of the Playlist to delete: ")
         // pass the index of the Playlist to playlistAPI for deleting and check for success.
-        val playlistToDelete = playlistAPI.delete(id)
+        val playlistToDelete = playlistAPI.deletePlaylist(id)
         if (playlistToDelete) {
             println("Delete Successful!")
         } else {
@@ -295,16 +339,17 @@ fun deletePlaylist() {
     }
 }
 
-fun archivePlaylist() { //download
+
+fun downloadPlaylist() { //download
     listActivePlaylists()
     if (playlistAPI.numberOfActivePlaylists() > 0) {
-        // only ask the user to choose the Playlist to archive if active Playlists exist
-        val id = readNextInt("Enter the id of the playlist to archive: ")
-        // pass the index of the Playlist to playlistAPI for archiving and check for success.
-        if (playlistAPI.archivePlaylist(id)) {
-            println("Archive Successful!")
+        // only ask the user to choose the Playlist to download if active Playlists exist
+        val id = readNextInt("Enter the id of the playlist to download: ")
+        // pass the index of the Playlist to playlistAPI for downloading and check for success.
+        if (playlistAPI.downloadPlaylist(id)) {
+            println("Download Successful!")
         } else {
-            println("Archive NOT Successful")
+            println("Download NOT Successful")
         }
     }
 }
@@ -376,8 +421,8 @@ fun markSongStatus() {
 //------------------------------------
 //playlist REPORTS MENU
 //------------------------------------
-fun searchPlaylists() {
-    val searchTitle = readNextLine("Enter the description to search by: ")
+fun searchPlaylistsByTitle() {
+    val searchTitle = readNextLine("Enter the title of desired playlist: ")
     val searchResults = playlistAPI.searchPlaylistsByTitle(searchTitle)
     if (searchResults.isEmpty()) {
         println("No playlists found")
@@ -385,6 +430,17 @@ fun searchPlaylists() {
         println(searchResults)
     }
 }
+
+fun searchPlaylistsByGenre() {
+    val searchGenre = readNextLine("Enter the genre you wish to search for: ")
+    val searchResults = playlistAPI.searchPlaylistsByGenre(searchGenre)
+    if (searchResults.isEmpty()) {
+        println("No playlists found under this Genre.")
+    } else {
+        println(searchResults)
+    }
+}
+
 
 //------------------------------------
 //Song REPORTS MENU
@@ -424,8 +480,8 @@ private fun askUserToChooseActivePlaylist(): Playlist? {
     if (playlistAPI.numberOfActivePlaylists() > 0) {
         val playlist = playlistAPI.findPlaylist(readNextInt("\nEnter the id of the playlist: "))
         if (playlist != null) {
-            if (playlist.isPlaylistArchived) {
-                println("Playlist is NOT Active, it is Archived")
+            if (playlist.isPlaylistDownloaded) {
+                println("Playlist is NOT Active, it is Downloaded")
             } else {
                 return playlist //chosen playlist is active
             }
@@ -446,3 +502,4 @@ private fun askUserToChooseSong(playlist: Playlist): Song? {
         return null
     }
 }
+
