@@ -106,7 +106,7 @@ fun viewPlaylistMenu() {
         when (option) {
             1 -> searchPlaylistsByTitle() //search for a playlist
             2 -> listAllPlaylists() // list all
-           // 3 -> listDownloaded() // view by status of downloaded or not (downloaded)
+            3 -> listDownloadedPlaylists() // view by status of downloaded or not (downloaded)
             4 -> listRating() //view playlists by rating (rating)
             5 -> searchPlaylistsByGenre() //search for a playlist by genre
             //Counts

@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="Commit before the implementation of the Download/Archive issue">
+    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="The Download functionality has been successfully integrated into the app - The next implementation will be the listing of downloaded playlists">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/models/Playlist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/models/Playlist.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/controllers/PlaylistAPITest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/controllers/PlaylistAPITest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +147,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670170619404</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="The Download functionality has been successfully integrated into the app">
+      <created>1670177211376</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1670177211380</updated>
+    </task>
+    <task id="LOCAL-00013" summary="The Download functionality has been successfully integrated into the app - The next implementation will be the listing of downloaded playlists">
+      <created>1670178400206</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1670178400206</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,6 +188,8 @@
     <MESSAGE value="Commit before Count features implementation" />
     <MESSAGE value="Count features have been implemented; involving the count of all playlists, count of playlists based on rating, count of playlist based on genre" />
     <MESSAGE value="Commit before the implementation of the Download/Archive issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit before the implementation of the Download/Archive issue" />
+    <MESSAGE value="The Download functionality has been successfully integrated into the app" />
+    <MESSAGE value="The Download functionality has been successfully integrated into the app - The next implementation will be the listing of downloaded playlists" />
+    <option name="LAST_COMMIT_MESSAGE" value="The Download functionality has been successfully integrated into the app - The next implementation will be the listing of downloaded playlists" />
   </component>
 </project>
