@@ -34,7 +34,7 @@ data class Playlist(var playlistId: Int = 0,
         //update the found object in the Set
         if (foundSong != null){
             foundSong.songTitle = newSong.songTitle
-            foundSong.isSongComplete = newSong.isSongComplete
+            foundSong.isSongFavoured = newSong.isSongFavoured
             return true
         }
 
@@ -45,7 +45,7 @@ data class Playlist(var playlistId: Int = 0,
     fun checkPlaylistCompletionStatus(): Boolean {
         if (songs.isNotEmpty()) {
             for (song in songs) {
-                if (!song.isSongComplete) {
+                if (!song.isSongFavoured) {
                     return false
                }
             }

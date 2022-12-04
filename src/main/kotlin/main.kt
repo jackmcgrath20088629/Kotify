@@ -113,7 +113,7 @@ fun viewPlaylistMenu() {
             6 -> countAllPlaylists() //counts all playlists created
             7 -> listGenres() //counts playlists per genre
             8 -> countByRating() //count playlist by rating
-           // 9 -> countDownloaded() //counts amount of playlists that are downloaded
+            9 -> countDownloaded() //counts amount of playlists that are downloaded
             0 -> playlistMenu() //back
             else -> println("Invalid option entered: $option")
         }
@@ -135,6 +135,7 @@ fun songMenu() {
                   > |   2) Update a songs information  |
                   > |   3) Delete a song               |
                   > |   4) View songs                  |
+                  > |   5) Favourite a song            |
                   > ------------------------------------
                   > |    0) Back                       |
                   > ------------------------------------
@@ -143,9 +144,10 @@ fun songMenu() {
 
         when (option) {
             1 -> addSongToPlaylist() //adds a song
-           // 2 -> updateSong() //updates the contents of a song
-           // 3 -> deleteSong() //deletes a song
-           // 4 -> viewSongMenu() //view menu of songs for listing and counting
+            2 -> updateSongInPlaylist() //updates the contents of a song
+            3 -> deleteASong() //deletes a song
+            4 -> viewSongMenu() //view menu of songs for listing and counting
+            5 -> markSongStatus() //Favourite a song
             0 -> mainMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -240,6 +242,7 @@ fun countAllRock() = println(playlistAPI.numberOfRock())
 fun countAllJazz() = println(playlistAPI.numberOfJazz())
 fun countAllRnB() = println(playlistAPI.numberOfRnB())
 fun countAllOther() = println(playlistAPI.numberOfOther())
+fun countDownloaded() = println(playlistAPI.numberOfDownloadedPlaylists())
 
 fun countByRating() {
     if (playlistAPI.numberOfPlaylists() > 0) {
@@ -366,7 +369,7 @@ private fun addSongToPlaylist() {
     }
 }
 
-fun updatesongTitleInPlaylist() {
+fun updateSongInPlaylist() {
     val playlist: Playlist? = askUserToChooseActivePlaylist()
     if (playlist != null) {
         val song: Song? = askUserToChooseSong(playlist)
@@ -399,21 +402,21 @@ fun deleteASong() {
     }
 }
 
-fun markSongStatus() {
+fun markSongStatus() { //FAVS
     val playlist: Playlist? = askUserToChooseActivePlaylist()
     if (playlist != null) {
         val song: Song? = askUserToChooseSong(playlist)
         if (song != null) {
             var changeStatus = 'X'
-            if (song.isSongComplete) {
-                changeStatus = readNextChar("The song is currently complete...do you want to mark it as TODO?")
+            if (song.isSongFavoured) {
+                changeStatus = readNextChar("The song is currently Favourited ...do you want to mark it as un-favourite?")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    song.isSongComplete = false
+                    song.isSongFavoured = false
             }
             else {
-                changeStatus = readNextChar("The song is currently TODO...do you want to mark it as Complete?")
+                changeStatus = readNextChar("The song is currently un-favourited...do you want to mark it as Favourite?")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    song.isSongComplete = true
+                    song.isSongFavoured = true
             }
         }
     }
@@ -456,12 +459,6 @@ fun searchSongs() {
     }
 }
 
-fun listToDoSongs(){
-    if (playlistAPI.numberOfToDoSongs() > 0) {
-        println("Total TODO Songs: ${playlistAPI.numberOfToDoSongs()}")
-    }
-    println(playlistAPI.listTodoSongs())
-}
 
 
 //------------------------------------
@@ -504,3 +501,9 @@ private fun askUserToChooseSong(playlist: Playlist): Song? {
     }
 }
 
+//fun listFavouriteSongs(){
+//    if (playlistAPI.numberOfFavouriteSongs() > 0) {
+//        println("Your favourite songs are: ${playlistAPI.numberOfFavouriteSongs()}")
+//    }
+//    println(playlistAPI.listFavouriteSongs())
+//}

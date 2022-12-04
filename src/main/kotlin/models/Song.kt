@@ -3,12 +3,15 @@ package models
 data class Song (var songId: Int = 0,
                  var songTitle : String,
                  var songArtist : String,
-                 var isSongComplete: Boolean = false) {
+                 var isSongFavoured: Boolean = false) {
 
     override fun toString(): String {
-        (isSongComplete)
+        if (isSongFavoured)
+            return "$songId: $songTitle by $songArtist (Favourited)"
+        else
             return "$songId: $songTitle by $songArtist"
     }
 
 
 }
+
