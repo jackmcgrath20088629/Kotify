@@ -306,7 +306,7 @@ fun updatePlaylist() {
     listAllPlaylists()
     if (playlistAPI.numberOfPlaylists() > 0) {
         // only ask the user to choose the Playlist if Playlists exist
-        val id = readNextInt("Enter the id of the Playlist to update: ")
+        val id = readNextInt("Enter the ID of the Playlist to update: ")
         if (playlistAPI.findPlaylist(id) != null) {
             val playlistTitle = readNextLine("Enter a title for the Playlist: ")
             val playlistRating = readNextInt("Enter a rating (☆ - ☆☆☆☆☆): ")
