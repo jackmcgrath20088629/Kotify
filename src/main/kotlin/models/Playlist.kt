@@ -33,7 +33,7 @@ data class Playlist(var playlistId: Int = 0,
         //if the object exists, use the details passed in the newSong parameter to
         //update the found object in the Set
         if (foundSong != null){
-            foundSong.songContents = newSong.songContents
+            foundSong.songTitle = newSong.songTitle
             foundSong.isSongComplete = newSong.isSongComplete
             return true
         }

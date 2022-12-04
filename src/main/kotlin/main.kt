@@ -142,10 +142,10 @@ fun songMenu() {
         )
 
         when (option) {
-           // 1 -> addSong()
-           // 2 -> updatePlaylist()
-           // 3 -> deletePlaylist()
-           // 4 -> viewSongMenu()
+            1 -> addSongToPlaylist() //adds a song
+           // 2 -> updateSong() //updates the contents of a song
+           // 3 -> deleteSong() //deletes a song
+           // 4 -> viewSongMenu() //view menu of songs for listing and counting
             0 -> mainMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -169,11 +169,11 @@ fun viewSongMenu() {
         )
 
         when (option) {
-           // 1 -> addPlaylist() //search for a playlist
-           // 2 -> updatePlaylist() // list all
-           // 3 -> deletePlaylist() // view by status of downloaded or not (downloaded)
-           // 4 -> () //view playlists by rating (rating)
-           // 5 -> () //view playlists by genre (genre/status?)
+           // 1 -> () //Search for a song
+           // 2 -> () // list all songs
+           // 3 -> ()
+           // 4 -> () //view song by artist
+           // 5 -> () //view songs by genre
             0 -> songMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -232,7 +232,7 @@ fun listAllPlaylists() = println(playlistAPI.listAllPlaylists())
 fun listActivePlaylists() = println(playlistAPI.listActivePlaylists()) //needed for downloaded
 fun listDownloadedPlaylists() = println(playlistAPI.listDownloadedPlaylists()) //downloaded
 
-//Counting methods
+//Counting
 fun countAllPlaylists() = println(playlistAPI.numberOfPlaylists())
 fun countAllHipHop() = println(playlistAPI.numberOfHipHop())
 fun countAllPop() = println(playlistAPI.numberOfPop())
@@ -309,8 +309,8 @@ fun updatePlaylist() {
         val id = readNextInt("Enter the ID of the Playlist to update: ")
         if (playlistAPI.findPlaylist(id) != null) {
             val playlistTitle = readNextLine("Enter a title for the Playlist: ")
-            val playlistRating = readNextInt("Enter a rating (☆ - ☆☆☆☆☆): ")
-            val playlistGenre = readNextLine("Enter a genre for the Playlist: ")
+            val playlistRating = readValidRating("Enter a rating (☆ - ☆☆☆☆☆): ")
+            val playlistGenre = readValidGenre("Enter a genre for the Playlist: ")
 
             // pass the index of the Playlist and the new Playlist details to playlistAPI for updating and check for success.
             if (playlistAPI.updatePlaylist(id, Playlist(0, playlistTitle, playlistRating, playlistGenre, false))){
@@ -360,19 +360,20 @@ fun downloadPlaylist() { //download
 private fun addSongToPlaylist() {
     val playlist: Playlist? = askUserToChooseActivePlaylist()
     if (playlist != null) {
-        if (playlist.addSong(Song(songContents = readNextLine("\t Song Contents: "))))
+        if (playlist.addSong(Song(songTitle = readNextLine("\t Song Title: "), songArtist = readNextLine("\t Song Artist: "))))
             println("Add Successful!")
         else println("Add NOT Successful")
     }
 }
 
-fun updateSongContentsInPlaylist() {
+fun updatesongTitleInPlaylist() {
     val playlist: Playlist? = askUserToChooseActivePlaylist()
     if (playlist != null) {
         val song: Song? = askUserToChooseSong(playlist)
         if (song != null) {
-            val newContents = readNextLine("Enter new contents: ")
-            if (playlist.update(song.songId, Song(songContents = newContents))) {
+            val newTitle = readNextLine("Enter new title: ")
+            val newArtist = readNextLine("Enter new artist: ")
+            if (playlist.update(song.songId, Song(songTitle = newTitle, songArtist = newArtist))) {
                 println("Song contents updated")
             } else {
                 println("Song contents NOT updated")

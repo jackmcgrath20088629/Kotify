@@ -116,7 +116,7 @@ class PlaylistAPI(serializerType: Serializer) {
             var listOfPlaylists = ""
             for (playlist in playlists) {
                 for (song in playlist.songs) {
-                    if (song.songContents.contains(searchString, ignoreCase = true)) {
+                    if (song.songTitle.contains(searchString, ignoreCase = true)) {
                         listOfPlaylists += "${playlist.playlistId}: ${playlist.playlistTitle} \n\t${song}\n"
                     }
                 }
@@ -136,7 +136,7 @@ class PlaylistAPI(serializerType: Serializer) {
              for (playlist in playlists) {
                  for (song in playlist.songs) {
                      if (!song.isSongComplete) {
-                         listOfTodoSongs += playlist.playlistTitle + ": " + song.songContents + "\n"
+                         listOfTodoSongs += playlist.playlistTitle + ": " + song.songTitle + "\n"
                      }
                  }
              }
