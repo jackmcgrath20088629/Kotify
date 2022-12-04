@@ -6,7 +6,7 @@ data class Playlist(var playlistId: Int = 0,
                     var playlistTitle: String,
                     var playlistRating: Int,
                     var playlistGenre: String,
-                    var isPlaylistArchived: Boolean = false,
+                    var isPlaylistDownloaded: Boolean = false,
                     var songs : MutableSet<Song> = mutableSetOf())
 {
     private var lastSongId = 0
@@ -50,7 +50,7 @@ data class Playlist(var playlistId: Int = 0,
                }
             }
         }
-        return true //a playlist with empty songs can be archived, or all songs are complete
+        return true //a playlist with empty songs can be downloaded, or all songs are complete
     }
 
     fun listSongs() =
@@ -58,8 +58,8 @@ data class Playlist(var playlistId: Int = 0,
          else  Utilities.formatSetString(songs)
 
     override fun toString(): String {
-        val archived = if (isPlaylistArchived) 'Y' else 'N'
-        return "$playlistId: $playlistTitle, Rating($playlistRating), Genre($playlistGenre), Archived($archived) \n${listSongs()}"
+        val downloaded = if (isPlaylistDownloaded) 'Y' else 'N'
+        return "$playlistId: $playlistTitle, Rating($playlistRating), Genre($playlistGenre), Downloaded($downloaded) \n${listSongs()}"
     }
 
 }
