@@ -80,10 +80,19 @@ class PlaylistAPI(serializerType: Serializer) {
     // ----------------------------------------------
     //  COUNTING METHODS - PLAYLISTS
     // ----------------------------------------------
+
     fun numberOfPlaylists() = playlists.size
     fun numberOfArchivedPlaylists(): Int = playlists.count { playlist: Playlist -> playlist.isPlaylistArchived }
     fun numberOfActivePlaylists(): Int = playlists.count { playlist: Playlist -> !playlist.isPlaylistArchived }
     fun numberOfPlaylistsByRating(rating: Int): Int = playlists.count { r: Playlist -> r.playlistRating == rating }
+
+    fun numberOfHipHop() = playlists.count { playlist -> playlist.playlistGenre == "Hip-Hop" }
+    fun numberOfPop() = playlists.count { playlist -> playlist.playlistGenre == "Pop" }
+    fun numberOfRock() = playlists.count { playlist -> playlist.playlistGenre == "Rock" }
+    fun numberOfJazz() = playlists.count { playlist -> playlist.playlistGenre == "Jazz" }
+    fun numberOfRnB() = playlists.count { playlist -> playlist.playlistGenre == "R&B" }
+    fun numberOfOther() = playlists.count { playlist -> playlist.playlistGenre == "Other" }
+
     // ----------------------------------------------
     //  SEARCHING METHODS
     // ---------------------------------------------
