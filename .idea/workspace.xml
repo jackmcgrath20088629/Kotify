@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="Listing Downloaded playlists has been successfully implemented">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/GenreUtility.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/ValidateInput.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/models/Playlist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/models/Playlist.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/Utilities.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/Utilities.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +91,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669818182771</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Listing Downloaded playlists has been successfully implemented">
+      <created>1670181978010</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1670181978011</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -116,6 +118,7 @@
     <MESSAGE value="persistence added" />
     <MESSAGE value="ratings added" />
     <MESSAGE value="ratings previously added - entering part 2 of this implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="ratings previously added - entering part 2 of this implementation" />
+    <MESSAGE value="Listing Downloaded playlists has been successfully implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Listing Downloaded playlists has been successfully implemented" />
   </component>
 </project>

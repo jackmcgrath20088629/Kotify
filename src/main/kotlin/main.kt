@@ -113,7 +113,7 @@ fun viewPlaylistMenu() {
             6 -> countAllPlaylists() //counts all playlists created
             7 -> listGenres() //counts playlists per genre
             8 -> countByRating() //count playlist by rating
-           // 9 -> countDownloaded() //counts amount of playlists that are downloaded
+            9 -> countDownloaded() //counts amount of playlists that are downloaded
             0 -> playlistMenu() //back
             else -> println("Invalid option entered: $option")
         }
@@ -301,6 +301,8 @@ fun listGenres() {
         println("Option Invalid - No playlists stored under this genre")
     }
 }
+
+fun countDownloaded() {println(playlistAPI.numberOfDownloadedPlaylists())}
 
 fun updatePlaylist() {
     listAllPlaylists()
