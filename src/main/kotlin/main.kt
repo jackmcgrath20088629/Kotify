@@ -475,13 +475,26 @@ fun markSongStatus() { //FAVS
 } //Favourite a song
 
 //Counting for songs
-fun countFavouriteSongs(){
+fun countNonFavouriteSongs(){
     if (playlistAPI.numberOfFavouriteSongs() > 0) {
-        println("Your favourite songs are: ${playlistAPI.numberOfFavouriteSongs()}")
+        println("Your unfavourited songs are: ${playlistAPI.numberOfFavouriteSongs()}")
     }
     println(playlistAPI.numberOfFavouriteSongs())
 }
 
+fun countAllSongs () {
+    println(playlistAPI.numberOfSongs())
+}
+
+fun countByArtist() {
+    val searchArtist = readNextLine("Enter the song artist to search by: ")
+    val searchResults = playlistAPI.countSongByArtist(searchArtist)
+    if (playlistAPI.countSongByArtist(searchArtist) < 0) {
+        println("No songs found")
+    } else {
+        println(searchResults)
+    }
+}
 
 //------------------------------------
 // Exit App

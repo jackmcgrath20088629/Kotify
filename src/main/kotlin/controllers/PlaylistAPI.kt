@@ -173,8 +173,6 @@ class PlaylistAPI(serializerType: Serializer) {
             }
             listOfAllSongs
         }
-
-
     // ----------------------------------------------
     //  COUNTING METHODS FOR SongS
     // ----------------------------------------------
@@ -189,6 +187,28 @@ class PlaylistAPI(serializerType: Serializer) {
         }
         return numberOfFavouriteSongs
     }
+    fun numberOfSongs(): Int {
+        var numberOfSongs = 0
+        for (playlist in playlists) {
+            for (song in playlist.songs) {
+                numberOfSongs++
+            }
+        }
+        return numberOfSongs
+    }
+
+    fun countSongByArtist(searchString: String): Int {
+        var numberOfArtistSongs = 0
+        for (playlist in playlists) {
+            for (song in playlist.songs) {
+                if (!song.songArtist.contains(searchString, ignoreCase = true)) {
+                    numberOfArtistSongs++
+                }
+            }
+        }
+        return numberOfArtistSongs
+    }
+
     // ----------------------------------------------
     //  LOAD / SAVE
     // ----------------------------------------------
