@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="The beginning of the addition of songs">
+    <list default="true" id="38836979-6328-4be7-86e2-20fc3ef9290a" name="Changes" comment="Commit before the count songs issue">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/controllers/PlaylistAPI.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
@@ -183,7 +183,35 @@
       <option name="project" value="LOCAL" />
       <updated>1670188746180</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Songs have been added along with the ability to set them as favourites">
+      <created>1670192331013</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1670192331014</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Listing of songs has been successfully implemented">
+      <created>1670249187581</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1670249187581</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Commit before the count songs issue">
+      <created>1670255787554</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1670255787554</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Commit before the count songs issue">
+      <created>1670256358272</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1670256358276</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -214,6 +242,9 @@
     <MESSAGE value="The Download functionality has been successfully integrated into the app - The next implementation will be the listing of downloaded playlists" />
     <MESSAGE value="Counting Downloaded playlists has been successfully implemented - redo" />
     <MESSAGE value="The beginning of the addition of songs" />
-    <option name="LAST_COMMIT_MESSAGE" value="The beginning of the addition of songs" />
+    <MESSAGE value="Songs have been added along with the ability to set them as favourites" />
+    <MESSAGE value="Listing of songs has been successfully implemented" />
+    <MESSAGE value="Commit before the count songs issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit before the count songs issue" />
   </component>
 </project>
