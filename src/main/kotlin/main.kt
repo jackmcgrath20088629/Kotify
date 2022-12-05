@@ -164,6 +164,10 @@ fun viewSongMenu() {
                   > |   3) View song by artist         |
                   > |   4) View non favourited songs   |
                   > ------------------------------------
+                  > |   5) Count all songs             |
+                  > |   6) Count by artist             |
+                  > |   7) Count non favoured songs    |
+                  > ------------------------------------
                   > |    0) Back                       |
                   > ------------------------------------
          > ==>> """.trimMargin(">")
@@ -174,6 +178,9 @@ fun viewSongMenu() {
             2 -> listAllSongs() // list all songs
             3 -> searchArtist() //view song by artist
             4 -> listNonFavouriteSongs() //view songs by genre
+            5 -> countAllSongs() //count all songs
+            6 -> countByArtist() //count songs by specific artist
+            7 -> countNonFavouriteSongs() //count all songs that are not favourites
             0 -> songMenu()
             else -> println("Invalid option entered: $option")
         }
