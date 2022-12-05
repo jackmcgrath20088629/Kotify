@@ -35,10 +35,10 @@ fun runMenu() {
     } while (true)
 }
 
-val style = black on (rgb("#1DB954")).bg
+val style = (rgb("#1DB954"))
 
 fun mainMenu() = readNextInt(
-    """ 
+    (style(""" 
          > -----------------------------------------------------  
          > |                 Welcome to Kotify                 |
          > -----------------------------------------------------  
@@ -48,14 +48,14 @@ fun mainMenu() = readNextInt(
          > |   0) Exit                                         |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
-)
+)))
 
 //----------------------------------//
 //PLAYLIST MENUS                    //
 //----------------------------------//
 fun playlistMenu() {
         val option = readNextInt(
-            """
+            (style("""
                   > ------------------------------------
                   > |          PLAYLIST MENU           |
                   > ------------------------------------
@@ -68,7 +68,7 @@ fun playlistMenu() {
                   >     0) Back                        |
                   > ------------------------------------
          > ==>> """.trimMargin(">")
-        )
+        )))
 
         when (option) {
             1 -> addPlaylist()
@@ -83,7 +83,7 @@ fun playlistMenu() {
 fun viewPlaylistMenu() {
     if (playlistAPI.numberOfPlaylists() > 0) {
         val option = readNextInt(
-            """
+            (style("""
                   > ------------------------------------
                   > |          PLAYLIST MENU           |
                   > ------------------------------------ 
@@ -101,7 +101,7 @@ fun viewPlaylistMenu() {
                   > |    0) Back                       |
                   > ------------------------------------
          > ==>> """.trimMargin(">")
-        )
+        )))
 
         when (option) {
             1 -> searchPlaylistsByTitle() //search for a playlist
@@ -127,7 +127,7 @@ fun viewPlaylistMenu() {
 //----------------------------------//
 fun songMenu() {
         val option = readNextInt(
-            """
+            (style("""
                   > ------------------------------------
                   > |           SONG MENU              |
                   > ------------------------------------
@@ -135,12 +135,12 @@ fun songMenu() {
                   > |   2) Update a songs information  |
                   > |   3) Delete a song               |
                   > |   4) View songs                  |
-                  > |   5) Favourite a song            |
+                  > |   5) Favourite a song ♡         |
                   > ------------------------------------
                   > |    0) Back                       |
                   > ------------------------------------
          > ==>> """.trimMargin(">")
-        )
+        )))
 
         when (option) {
             1 -> addSongToPlaylist() //adds a song
@@ -155,7 +155,7 @@ fun songMenu() {
 fun viewSongMenu() {
     if (playlistAPI.numberOfPlaylists() > 0) {
         val option = readNextInt(
-            """
+            (style("""
                   > ------------------------------------
                   > |           SONG MENU              |
                   > ------------------------------------
@@ -171,7 +171,7 @@ fun viewSongMenu() {
                   > |    0) Back                       |
                   > ------------------------------------
          > ==>> """.trimMargin(">")
-        )
+        )))
 
         when (option) {
             1 -> searchSongs() //Search for a song
@@ -252,7 +252,7 @@ fun countDownloaded() = println(playlistAPI.numberOfDownloadedPlaylists())
 fun countByRating() {
     if (playlistAPI.numberOfPlaylists() > 0) {
         val option = readNextInt(
-            """
+            (style("""
                   > ------------------------------------------------------
                   > |   Please enter a rating number (1 to 5)            |
                   > |   1) - ☆                                           |
@@ -262,7 +262,7 @@ fun countByRating() {
                   > |   5) - ☆☆☆☆☆                                      |
                   > ------------------------------------------------------
          > ==>> """.trimMargin(">")
-        )
+        )))
 
         when (option) {
             1 -> println(playlistAPI.numberOfPlaylistsByRating(1))
@@ -487,7 +487,7 @@ fun countAllSongs () {
 }
 
 fun countByArtist() {
-    val searchArtist = readNextLine("Enter the song artist to search by: ")
+    val searchArtist = readNextLine("Enter the artist to search by: ")
     val searchResults = playlistAPI.countSongByArtist(searchArtist)
     if (playlistAPI.countSongByArtist(searchArtist) < 0) {
         println("No songs found")
@@ -500,7 +500,7 @@ fun countByArtist() {
 // Exit App
 //------------------------------------
 fun exitApp() {
-    println("Exiting...bye")
+    println("Exiting...bye♡")
     exitProcess(0)
 }
 
