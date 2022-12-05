@@ -126,37 +126,69 @@ class PlaylistAPI(serializerType: Serializer) {
         }
     }
 
+    fun searchSongByArtist(searchString: String): String {
+        return if (numberOfPlaylists() == 0) "No playlists stored"
+        else {
+            var listOfPlaylists = ""
+            for (playlist in playlists) {
+                for (song in playlist.songs) {
+                    if (song.songArtist.contains(searchString, ignoreCase = true)) {
+                        listOfPlaylists += "${playlist.playlistId}: ${playlist.playlistTitle} \n\t${song}\n"
+                    }
+                }
+            }
+            if (listOfPlaylists == "") "No songs found for: $searchString"
+            else listOfPlaylists
+        }
+    }
+
+
     // ----------------------------------------------
     //  LISTING METHODS FOR songS
     // ----------------------------------------------
-//    fun listSongs(): String =
-//         if (numberOfPlaylists() == 0) "No playlists stored"
-//         else {
-//             var listOfTodoSongs = ""
-//             for (playlist in playlists) {
-//                 for (song in playlist.songs) {
-//                     if (!song.isSongFavoured) {
-//                         listOfTodoSongs += playlist.playlistTitle + ": " + song.songTitle + "\n"
-//                     }
-//                 }
-//             }
-//             listOfTodoSongs
-//         }
+    fun listNonFavouriteSongs(): String =
+         if (numberOfPlaylists() == 0) "No playlists stored"
+         else {
+             var listOfNonFavouriteSongs = ""
+             for (playlist in playlists) {
+                 for (song in playlist.songs) {
+                     if (!song.isSongFavoured) {
+                         listOfNonFavouriteSongs += playlist.playlistTitle + ": " + song.songTitle + "\n"
+                     }
+                 }
+             }
+             listOfNonFavouriteSongs
+         }
+
+    fun listAllSongs(): String =
+        if (numberOfPlaylists() == 0) "No playlists stored"
+        else {
+            var listOfAllSongs = ""
+            for (playlist in playlists) {
+                for (song in playlist.songs) {
+
+                        listOfAllSongs += playlist.playlistTitle + ": " + song.songTitle + " by " + song.songArtist + "\n"
+
+                }
+            }
+            listOfAllSongs
+        }
+
 
     // ----------------------------------------------
     //  COUNTING METHODS FOR SongS
     // ----------------------------------------------
-//    fun numberOfToDoSongs(): Int {
-//        var numberOfToDoSongs = 0
-//        for (playlist in playlists) {
-//            for (song in playlist.songs) {
-//                if (!song.isSongFavoured) {
-//                    numberOfToDoSongs++
-//                }
-//            }
-//        }
-//        return numberOfToDoSongs
-//    }
+    fun numberOfFavouriteSongs(): Int {
+        var numberOfFavouriteSongs = 0
+        for (playlist in playlists) {
+            for (song in playlist.songs) {
+                if (!song.isSongFavoured) {
+                    numberOfFavouriteSongs++
+                }
+            }
+        }
+        return numberOfFavouriteSongs
+    }
     // ----------------------------------------------
     //  LOAD / SAVE
     // ----------------------------------------------

@@ -161,9 +161,8 @@ fun viewSongMenu() {
                   > ------------------------------------
                   > |   1) Search for a Song           | 
                   > |   2) View all songs              |
-                  > |   3) View all downloaded         |
-                  > |   4) View song by artist         |
-                  > |   5) View songs by genre         |
+                  > |   3) View song by artist         |
+                  > |   4) View non favourited songs   |
                   > ------------------------------------
                   > |    0) Back                       |
                   > ------------------------------------
@@ -171,11 +170,10 @@ fun viewSongMenu() {
         )
 
         when (option) {
-           // 1 -> () //Search for a song
-           // 2 -> () // list all songs
-           // 3 -> ()
-           // 4 -> () //view song by artist
-           // 5 -> () //view songs by genre
+            1 -> searchSongs() //Search for a song
+            2 -> listAllSongs() // list all songs
+            3 -> searchArtist() //view song by artist
+            4 -> listNonFavouriteSongs() //view songs by genre
             0 -> songMenu()
             else -> println("Invalid option entered: $option")
         }
@@ -402,26 +400,6 @@ fun deleteASong() {
     }
 }
 
-fun markSongStatus() { //FAVS
-    val playlist: Playlist? = askUserToChooseActivePlaylist()
-    if (playlist != null) {
-        val song: Song? = askUserToChooseSong(playlist)
-        if (song != null) {
-            var changeStatus = 'X'
-            if (song.isSongFavoured) {
-                changeStatus = readNextChar("The song is currently Favourited ...do you want to mark it as un-favourite?")
-                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    song.isSongFavoured = false
-            }
-            else {
-                changeStatus = readNextChar("The song is currently un-favourited...do you want to mark it as Favourite?")
-                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    song.isSongFavoured = true
-            }
-        }
-    }
-}
-
 //------------------------------------
 //playlist REPORTS MENU
 //------------------------------------
@@ -450,7 +428,7 @@ fun searchPlaylistsByGenre() {
 //Song REPORTS MENU
 //------------------------------------
 fun searchSongs() {
-    val searchContents = readNextLine("Enter the song contents to search by: ")
+    val searchContents = readNextLine("Enter the song title to search by: ")
     val searchResults = playlistAPI.searchSongByContents(searchContents)
     if (searchResults.isEmpty()) {
         println("No songs found")
@@ -458,7 +436,44 @@ fun searchSongs() {
         println(searchResults)
     }
 }
+fun listAllSongs() { println(playlistAPI.listAllSongs())}
+fun searchArtist() {
+    val searchArtist = readNextLine("Enter the song artist to search by: ")
+    val searchResults = playlistAPI.searchSongByArtist(searchArtist)
+    if (searchResults.isEmpty()) {
+        println("No songs found")
+    } else {
+        println(searchResults)
+    }
+}
+fun listNonFavouriteSongs(){ println(playlistAPI.listNonFavouriteSongs())}
+fun markSongStatus() { //FAVS
+    val playlist: Playlist? = askUserToChooseActivePlaylist()
+    if (playlist != null) {
+        val song: Song? = askUserToChooseSong(playlist)
+        if (song != null) {
+            var changeStatus = 'X'
+            if (song.isSongFavoured) {
+                changeStatus = readNextChar("The song is currently Favourited ...do you want to mark it as un-favourite?")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    song.isSongFavoured = false
+            }
+            else {
+                changeStatus = readNextChar("The song is currently un-favourited...do you want to mark it as Favourite?")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    song.isSongFavoured = true
+            }
+        }
+    }
+} //Favourite a song
 
+//Counting for songs
+fun countFavouriteSongs(){
+    if (playlistAPI.numberOfFavouriteSongs() > 0) {
+        println("Your favourite songs are: ${playlistAPI.numberOfFavouriteSongs()}")
+    }
+    println(playlistAPI.numberOfFavouriteSongs())
+}
 
 
 //------------------------------------
@@ -501,9 +516,3 @@ private fun askUserToChooseSong(playlist: Playlist): Song? {
     }
 }
 
-//fun listFavouriteSongs(){
-//    if (playlistAPI.numberOfFavouriteSongs() > 0) {
-//        println("Your favourite songs are: ${playlistAPI.numberOfFavouriteSongs()}")
-//    }
-//    println(playlistAPI.listFavouriteSongs())
-//}
