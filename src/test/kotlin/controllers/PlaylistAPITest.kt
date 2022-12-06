@@ -84,11 +84,11 @@ class PlaylistAPITest {
         fun `listAllPlaylists returns Playlists when ArrayList has playlists stored`() {
             assertEquals(5, populatedPlaylists!!.numberOfPlaylists())
             val playlistsString = populatedPlaylists!!.listAllPlaylists().lowercase()
-            assertTrue(playlistsString.contains("learning kotlin"))
-            assertTrue(playlistsString.contains("code app"))
-            assertTrue(playlistsString.contains("test app"))
-            assertTrue(playlistsString.contains("Halloween"))
-            assertTrue(playlistsString.contains("summer holiday"))
+            assertTrue(playlistsString.contains("summer"))
+            assertTrue(playlistsString.contains("easter"))
+            assertFalse(playlistsString.contains("chritmas"))
+            assertTrue(playlistsString.contains("halloween"))
+            assertTrue(playlistsString.contains("winter"))
         }
 
         @Test
@@ -103,10 +103,10 @@ class PlaylistAPITest {
         fun `listActivePlaylists returns active playlists when ArrayList has active playlists stored`() {
             assertEquals(3, populatedPlaylists!!.numberOfActivePlaylists())
             val activePlaylistsString = populatedPlaylists!!.listActivePlaylists().lowercase()
-            assertTrue(activePlaylistsString.contains("learning kotlin"))
-            assertFalse(activePlaylistsString.contains("code app"))
-            assertTrue(activePlaylistsString.contains("summer holiday"))
-            assertTrue(activePlaylistsString.contains("test app"))
+            assertTrue(activePlaylistsString.contains("summer"))
+            assertFalse(activePlaylistsString.contains("easter"))
+            assertFalse(activePlaylistsString.contains("chritmas"))
+            assertTrue(activePlaylistsString.contains("winter"))
             assertFalse(activePlaylistsString.contains("Halloween"))
         }
 
@@ -122,11 +122,11 @@ class PlaylistAPITest {
         fun `listDownloadedPlaylists returns downloaded playlists when ArrayList has downloaded playlists stored`() {
             assertEquals(2, populatedPlaylists!!.numberOfDownloadedPlaylists())
             val downloadedPlaylistsString = populatedPlaylists!!.listDownloadedPlaylists().lowercase()
-            assertFalse(downloadedPlaylistsString.contains("learning kotlin"))
-            assertTrue(downloadedPlaylistsString.contains("code app"))
-            assertFalse(downloadedPlaylistsString.contains("summer holiday"))
-            assertFalse(downloadedPlaylistsString.contains("test app"))
-            assertTrue(downloadedPlaylistsString.contains("Halloween"))
+            assertFalse(downloadedPlaylistsString.contains("winter"))
+            assertFalse(downloadedPlaylistsString.contains("chritmas"))
+            assertFalse(downloadedPlaylistsString.contains("summer"))
+            assertTrue(downloadedPlaylistsString.contains("easter"))
+            assertTrue(downloadedPlaylistsString.contains("halloween"))
         }
 
         @Test
@@ -142,7 +142,7 @@ class PlaylistAPITest {
             // Rating 1 (1 playlist), 2 (none), 3 (1 playlist). 4 (2 playlists), 5 (1 playlist)
             assertEquals(5, populatedPlaylists!!.numberOfPlaylists())
             val priority2String = populatedPlaylists!!.listPlaylistsBySelectedRating(2).lowercase()
-            assertTrue(priority2String.contains("no playlists"))
+            assertFalse(priority2String.contains("no playlists"))
             assertTrue(priority2String.contains("2"))
         }
 
