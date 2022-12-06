@@ -1,0 +1,31 @@
+<object-stream>
+  <list>
+    <models.Playlist>
+      <playlistId>0</playlistId>
+      <playlistTitle>Christmas Holiday</playlistTitle>
+      <playlistRating>5</playlistRating>
+      <playlistGenre>R&amp;B</playlistGenre>
+      <isPlaylistDownloaded>false</isPlaylistDownloaded>
+      <songs class="linked-hash-set"/>
+      <lastSongId>0</lastSongId>
+    </models.Playlist>
+    <models.Playlist>
+      <playlistId>1</playlistId>
+      <playlistTitle>Halloween Party</playlistTitle>
+      <playlistRating>1</playlistRating>
+      <playlistGenre>Pop</playlistGenre>
+      <isPlaylistDownloaded>true</isPlaylistDownloaded>
+      <songs class="linked-hash-set"/>
+      <lastSongId>0</lastSongId>
+    </models.Playlist>
+    <models.Playlist>
+      <playlistId>2</playlistId>
+      <playlistTitle>Winter Holiday</playlistTitle>
+      <playlistRating>3</playlistRating>
+      <playlistGenre>Other</playlistGenre>
+      <isPlaylistDownloaded>false</isPlaylistDownloaded>
+      <songs class="linked-hash-set"/>
+      <lastSongId>0</lastSongId>
+    </models.Playlist>
+  </list>
+</object-stream>
